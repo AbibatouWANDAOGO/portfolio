@@ -1,9 +1,11 @@
 ---
 title: Détection et prédiction des accidents de la route
 domain: data-scientist
-summary: Étude de conception d'un système d'IA qui détecte un accident en temps réel (vidéo et capteurs) et prédit les zones à risque pour agir en prévention. Projet de groupe.
+summary: Étude de conception d'un système d'IA qui détecte un accident en temps réel et prédit les situations à risque (projet de groupe), puis mise en pratique sur les 125 000 personnes impliquées dans un accident en France en 2023.
 date: 2025-10-16
-tools: [Computer vision, YOLOv8, 3D-CNN, LSTM / GRU, ST-GCN, ConvLSTM, Fusion de capteurs]
+tools: [Computer vision, YOLOv8, LSTM / GRU, ST-GCN, Fusion de capteurs, Python, XGBoost]
+github: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction
+notebook: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb
 status: terminé
 ---
 
@@ -48,4 +50,24 @@ Le livrable est une **architecture de solution complète** pour les deux cas d'u
 
 > Ce travail m'a appris à **cadrer un projet d'IA avant de coder** : partir du besoin métier, inventorier les données réellement disponibles et anticiper les biais. Ces étapes conditionnent la qualité du modèle final.
 
-**Mise en pratique** : j'ai ensuite travaillé sur les données ouvertes d'accidentologie (BAAC 2023) pour [prédire la gravité des blessures](/portfolio/projets/data-scientist/gravite-accidents-route). **Prochaine étape** : un prototype de la partie détection en temps réel, avec YOLOv8 sur un jeu de vidéos d'accidents public.
+## Mise en pratique sur des données réelles
+
+Pour confronter cette conception au terrain, j'ai travaillé sur la partie **prédiction** à partir des données ouvertes d'accidentologie (BAAC 2023) : **54 822 accidents** et **125 789 personnes impliquées** en France. Pour chaque personne, l'objectif est de prédire la gravité des blessures à partir des circonstances, de la route, du véhicule et de son profil.
+
+![Gravité des blessures des personnes impliquées dans un accident en 2023](/portfolio/images/accidents/severity_distribution.png)
+*Les cas graves sont rares : 15 % de blessés hospitalisés et 2,7 % de tués. C'est ce déséquilibre qui rend la prédiction difficile.*
+
+Les données confirment l'intérêt de **cibler les situations à risque**, comme le prévoyait l'étude :
+
+![Taux de blessés graves selon la zone, la luminosité et l'âge](/portfolio/images/accidents/severe_rate_by_context.png)
+*Hors agglomération, la part de tués ou hospitalisés est deux fois plus élevée qu'en ville (26 % contre 13 %). Elle atteint 27 % la nuit sans éclairage et 32 % au-delà de 75 ans.*
+
+**Résultat du modèle :** un XGBoost entraîné avec pondération des classes repère **58 % des accidents mortels**, contre 7 % sans pondération. En contrepartie, il donne beaucoup de fausses alertes (précision de 15 % sur les tués) : il sert à prioriser les situations à risque, pas à poser un diagnostic.
+
+![Matrices de confusion avant et après pondération des classes](/portfolio/images/accidents/confusion_matrices.png)
+
+**Un risque anticipé qui s'est vérifié :** l'étude pointait les biais des données historiques. En pratique, le piège venait de la fusion des tables : des doublons gonflaient le score du premier modèle de **11 points**. Je les ai détectés et corrigés avant toute modélisation.
+
+👉 Détails complets : [Prédire la gravité des accidents de la route](/portfolio/projets/data-scientist/gravite-accidents-route) · [notebook](https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb)
+
+**Prochaine étape** : un prototype de la partie détection en temps réel, avec YOLOv8 sur un jeu de vidéos d'accidents public.

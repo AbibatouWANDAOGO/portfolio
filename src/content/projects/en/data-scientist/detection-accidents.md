@@ -1,9 +1,11 @@
 ---
 title: Road Accident Detection and Prediction
 domain: data-scientist
-summary: Design study of an AI system that detects accidents in real time (video and sensors) and predicts high-risk areas for preventive action. Group project.
+summary: Design study of an AI system that detects accidents in real time and predicts high-risk situations (group project), then put into practice on the 125,000 people involved in road accidents in France in 2023.
 date: 2025-10-16
-tools: [Computer vision, YOLOv8, 3D-CNN, LSTM / GRU, ST-GCN, ConvLSTM, Sensor fusion]
+tools: [Computer vision, YOLOv8, LSTM / GRU, ST-GCN, Sensor fusion, Python, XGBoost]
+github: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction
+notebook: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb
 status: terminé
 ---
 
@@ -48,4 +50,26 @@ The deliverable is a **complete solution architecture** for both use cases. For 
 
 > This work taught me to **frame an AI project before writing code**: start from the business need, list the data that is actually available and anticipate biases. These steps determine the quality of the final model.
 
-**Putting it into practice**: I then worked on French open accident data (BAAC 2023) to [predict injury severity](/portfolio/en/projects/data-scientist/gravite-accidents-route). **Next step**: a prototype of the real-time detection part, using YOLOv8 on a public dataset of accident videos.
+## Putting it into practice on real data
+
+To test this design against reality, I worked on the **prediction** part using French open accident data (BAAC 2023): **54,822 accidents** and **125,789 people involved**. For each person, the goal is to predict injury severity from the circumstances, the road, the vehicle and their profile.
+
+![Injury severity of people involved in road accidents in 2023](/portfolio/images/accidents/severity_distribution.png)
+*Serious cases are rare: 15% hospitalised and 2.7% killed. This imbalance is what makes prediction hard.*
+
+The data confirms the value of **targeting high-risk situations**, as the study anticipated:
+
+![Share of serious injuries by area, lighting and age](/portfolio/images/accidents/severe_rate_by_context.png)
+*Outside built-up areas, the share of people killed or hospitalised is twice as high as in town (26% vs 13%). It reaches 27% at night without street lighting and 32% over age 75.*
+
+**Model result:** an XGBoost trained with class weighting flags **58% of fatal cases**, compared with 7% without weighting. In return, it raises many false alarms (15% precision on fatal cases): it is meant to prioritise high-risk situations, not to make a diagnosis.
+
+![Confusion matrices before and after class weighting](/portfolio/images/accidents/confusion_matrices.png)
+
+**A risk we anticipated, confirmed in practice:** the study flagged biases in historical data. In practice, the trap was in merging the tables: duplicates inflated the first model's score by **11 points**. I detected and fixed them before any modelling.
+
+👉 Full details: [Predicting Road Accident Severity](/portfolio/en/projects/data-scientist/gravite-accidents-route) · [notebook](https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb)
+
+**Next step**: a prototype of the real-time detection part, using YOLOv8 on a public dataset of accident videos.
+
+*Charts are labelled in French.*
