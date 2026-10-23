@@ -48,4 +48,4 @@ The deliverable is a **complete solution architecture** for both use cases. For 
 
 > This work taught me to **frame an AI project before writing code**: start from the business need, list the data that is actually available and anticipate biases. These steps determine the quality of the final model.
 
-**Planned next step**: a prototype of the detection part, using YOLOv8 on a public dataset of accident videos, then a map of high-risk areas built from French open accident data (BAAC).
+**Putting it into practice**: I then worked on French open accident data (BAAC 2023) to [predict injury severity](/portfolio/en/projects/data-scientist/gravite-accidents-route). **Next step**: a prototype of the real-time detection part, using YOLOv8 on a public dataset of accident videos.

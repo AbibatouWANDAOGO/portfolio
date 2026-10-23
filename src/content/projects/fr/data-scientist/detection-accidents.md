@@ -48,4 +48,4 @@ Le livrable est une **architecture de solution complète** pour les deux cas d'u
 
 > Ce travail m'a appris à **cadrer un projet d'IA avant de coder** : partir du besoin métier, inventorier les données réellement disponibles et anticiper les biais. Ces étapes conditionnent la qualité du modèle final.
 
-**Suite envisagée** : un prototype de la partie détection, avec YOLOv8 sur un jeu de vidéos d'accidents public, puis une carte des zones à risque à partir des données ouvertes d'accidentologie (BAAC).
+**Mise en pratique** : j'ai ensuite travaillé sur les données ouvertes d'accidentologie (BAAC 2023) pour [prédire la gravité des blessures](/portfolio/projets/data-scientist/gravite-accidents-route). **Prochaine étape** : un prototype de la partie détection en temps réel, avec YOLOv8 sur un jeu de vidéos d'accidents public.
