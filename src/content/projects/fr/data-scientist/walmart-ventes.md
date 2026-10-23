@@ -29,6 +29,10 @@ Peut-on **prévoir les ventes hebdomadaires** d'un magasin à partir de ces fact
 5. **Modélisation** : régression linéaire avec séparation apprentissage / test (80 / 20). Elle est évaluée par le RSS, le RSE et le R² sur les deux ensembles.
 6. **Feature engineering** : les ventes explosent à Thanksgiving et avant Noël, ce que `IsHoliday` capte mal. J'ai donc créé une variable `End_of_year_holidays`, qui vaut 1 pour les semaines 47 et 49 à 51.
 
+![Évolution des ventes hebdomadaires moyennes : deux pics nets à Thanksgiving et avant Noël](/portfolio/images/walmart/sales_over_time.png)
+*Ventes hebdomadaires moyennes des 45 magasins : stables toute l'année, avec deux pics nets à Thanksgiving et avant Noël. C'est ce constat qui a motivé la variable « fêtes de fin d'année ».*
+
+
 ## Difficultés rencontrées
 
 - **Des valeurs manquantes partout, y compris dans la date et dans les variables booléennes.** L'imputation KNN de scikit-learn ne fonctionne qu'avec des nombres. J'ai donc séparé les variables qualitatives, complétées par la valeur précédente, des variables quantitatives, imputées par KNN. Il fallait aussi standardiser avant le KNN : sinon, `Size` (≈ 100 000) écrase complètement `Fuel_Price` (≈ 3) dans le calcul des distances.
@@ -44,7 +48,12 @@ Peut-on **prévoir les ventes hebdomadaires** d'un magasin à partir de ces fact
 | + date + one-hot (magasin, type, vacances)    | 0,930            | 0,918     |
 | + variable « fêtes de fin d'année »           | **0,954**        | **0,941** |
 
+![Comparaison des R² des trois modèles](/portfolio/images/walmart/model_comparison.png)
+
 > Une simple régression linéaire, avec un bon encodage et **une seule variable bien choisie**, explique **94 % de la variance** des ventes sur des semaines jamais vues. L'erreur type passe de 319 000 $ à 121 000 $ par semaine.
+
+![Prédictions contre ventes réelles sur la base de test, et distribution des erreurs](/portfolio/images/walmart/predictions_vs_actual.png)
+*À gauche, chaque point est une semaine de la base de test : plus il est proche de la diagonale, meilleure est la prédiction. À droite, les erreurs sont centrées sur 0, avec une erreur médiane de **48 000 $** pour des ventes moyennes d'environ 1 M$.*
 
 **Ce que j'en retiens :**
 
@@ -52,4 +61,8 @@ Peut-on **prévoir les ventes hebdomadaires** d'un magasin à partir de ces fact
 - **L'identité du magasin** (encodage one-hot) apporte le plus gros gain : chaque magasin a son propre niveau de ventes.
 - **Une semaine de fêtes de fin d'année** rapporte en moyenne **+460 000 $** de ventes par magasin. C'est l'effet saisonnier dominant. Les semaines `IsHoliday`, qui mélangent Super Bowl, fête du Travail et Noël, n'augmentent les ventes que d'environ 8 %.
 
-**Pistes d'amélioration** : validation croisée temporelle (entraîner sur le passé, tester sur le futur), modèles non linéaires (Random Forest, Gradient Boosting) et variables de décalage (ventes des semaines précédentes).
+**La limite du modèle :** sur le plus gros magasin du réseau, le modèle place bien les pics de Noël, mais en sous-estime nettement la hauteur (≈ 2,5 M$ prédits contre 3,8 M$ réels). Dans une régression linéaire, l'effet « fêtes » est un montant fixe, identique pour tous les magasins, alors qu'en réalité il est proportionnel à leur taille.
+
+![Ventes réelles et prédites du magasin n°20](/portfolio/images/walmart/store_20_actual_vs_predicted.png)
+
+**Pistes d'amélioration** : interaction `fêtes × taille du magasin` ou cible en logarithme pour capter les effets proportionnels, validation croisée temporelle (entraîner sur le passé, tester sur le futur), modèles non linéaires (Random Forest, Gradient Boosting) et variables de décalage (ventes des semaines précédentes).

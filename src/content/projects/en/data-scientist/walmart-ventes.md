@@ -29,6 +29,10 @@ Can we **forecast a store's weekly sales** from these factors, and **which varia
 5. **Modelling**: linear regression with an 80 / 20 train / test split. It is evaluated with RSS, RSE and R² on both sets.
 6. **Feature engineering**: sales soar at Thanksgiving and before Christmas, which `IsHoliday` captures poorly. So I created an `End_of_year_holidays` variable, equal to 1 for weeks 47 and 49 to 51.
 
+![Average weekly sales over time: two sharp peaks at Thanksgiving and before Christmas](/portfolio/images/walmart/sales_over_time.png)
+*Average weekly sales across the 45 stores: stable all year round, with two sharp peaks at Thanksgiving and before Christmas. This is what led to the "end-of-year holidays" variable.*
+
+
 ## Challenges
 
 - **Missing values everywhere, including in the date and in boolean variables.** Scikit-learn's KNN imputer only works with numbers. I therefore split the qualitative variables, filled with the previous value, from the quantitative ones, imputed with KNN. Standardising before KNN was also essential: otherwise `Size` (≈ 100,000) completely drowns out `Fuel_Price` (≈ 3) in the distance calculation.
@@ -44,7 +48,12 @@ Can we **forecast a store's weekly sales** from these factors, and **which varia
 | + date + one-hot (store, type, holiday)       | 0.930     | 0.918     |
 | + "end-of-year holidays" variable             | **0.954** | **0.941** |
 
+![R² comparison of the three models](/portfolio/images/walmart/model_comparison.png)
+
 > A simple linear regression, with good encoding and **one well-chosen variable**, explains **94% of the variance** in sales on unseen weeks. The standard error drops from $319,000 to $121,000 per week.
+
+![Predicted vs actual sales on the test set, and error distribution](/portfolio/images/walmart/predictions_vs_actual.png)
+*Left: each dot is a week from the test set; the closer it is to the diagonal, the better the prediction. Right: errors are centred on 0, with a median error of **$48,000** for average sales of about $1M.*
 
 **Key takeaways:**
 
@@ -52,4 +61,8 @@ Can we **forecast a store's weekly sales** from these factors, and **which varia
 - **Store identity** (one-hot encoding) brings the biggest gain: each store has its own sales level.
 - **An end-of-year holiday week** brings in **+$460,000** of sales per store on average. It is the dominant seasonal effect. `IsHoliday` weeks, which mix the Super Bowl, Labor Day and Christmas, only lift sales by about 8%.
 
-**Next steps**: time-based cross-validation (train on the past, test on the future), non-linear models (Random Forest, Gradient Boosting) and lag features (previous weeks' sales).
+**The model's limit:** on the largest store in the network, the model places the Christmas peaks correctly but clearly underestimates their height (≈ $2.5M predicted vs $3.8M actual). In a linear regression, the holiday effect is a fixed amount, the same for every store, whereas in reality it is proportional to store size.
+
+![Actual and predicted sales for store no. 20](/portfolio/images/walmart/store_20_actual_vs_predicted.png)
+
+**Next steps**: a `holidays × store size` interaction or a log-transformed target to capture proportional effects, time-based cross-validation (train on the past, test on the future), non-linear models (Random Forest, Gradient Boosting) and lag features (previous weeks' sales).

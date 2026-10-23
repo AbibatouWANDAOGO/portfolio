@@ -316,6 +316,17 @@ const alternates = Object.fromEntries(langs.map((l) => [l, projectPath(l, projec
     border-radius: var(--radius);
     border: 1px solid var(--line);
     margin: 1.25rem 0;
+    background: #ffffff;
+  }
+
+  /* Graphique suivi de sa légende en italique */
+  .prose :global(p:has(> img)) {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .prose :global(p:has(> img) img) {
+    margin-bottom: 0.6rem;
   }
 
   .end {
