@@ -1,0 +1,556 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from './ProjectCard.astro';
+import { profile, content } from '../data/profile';
+import { domains, domainName } from '../data/domains';
+import { getProjects } from '../data/projects';
+import { ui, url, homePath, domainPath, langs, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const { role, intro, highlights, experiences, education, associations, certifications, skills, languages, interests } =
+  content[lang];
+const alternates = Object.fromEntries(langs.map((l) => [l, homePath(l)])) as Record<Lang, string>;
+
+const projects = await getProjects(lang);
+const featured = projects.filter((p) => p.entry.data.featured);
+const countByDomain = (slug: string) => projects.filter((p) => p.entry.data.domain === slug).length;
+const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
+---
+
+<Base lang={lang} alternates={alternates}>
+  <slot name="head" slot="head" />
+  <!-- Accueil -->
+  <section class="section hero">
+    <div class="container hero-inner">
+      <div>
+        <p class="eyebrow">{role}</p>
+        <h1>{t.hello} <span class="accent">{profile.firstName} {profile.lastName}</span></h1>
+        <p class="lead">{intro}</p>
+        <div class="actions">
+          <a href="#projets" class="btn btn-primary">{t.viewProjects}</a>
+          <a href="#contact" class="btn btn-ghost">{t.contactMe}</a>
+          {profile.cv && <a href={url(profile.cv)} class="btn btn-ghost" target="_blank">{t.myCv}</a>}
+        </div>
+        <ul class="highlights">
+          {
+            highlights.map((h) => (
+              <li>
+                <strong>{h.value}</strong>
+                <span>{h.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="avatar" aria-hidden={!profile.photo}>
+        {profile.photo ? <img src={url(profile.photo)} alt={`${t.photoOf} ${profile.firstName}`} /> : <span>{initials}</span>}
+      </div>
+    </div>
+  </section>
+
+  <!-- Expérience -->
+  <section class="section" id="experience">
+    <div class="container">
+      <p class="eyebrow">{t.experience.eyebrow}</p>
+      <h2 class="section-title">{t.experience.title}</h2>
+      <div class="jobs">
+        {
+          experiences.map((x) => (
+            <article class="card job">
+              <header class="job-head">
+                <div class="logo">
+                  {x.logo ? (
+                    <img src={url(x.logo)} alt={x.company} />
+                  ) : (
+                    <span>{x.company.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
+                  )}
+                </div>
+                <div>
+                  <h3>{x.title}</h3>
+                  <p class="company">{x.company}</p>
+                  <p class="sub">{x.subtitle}</p>
+                  <p class="sub">
+                    {x.period} · {x.location}
+                  </p>
+                </div>
+              </header>
+
+              <div class="job-body">
+                {x.introTitle && <h4>{x.introTitle}</h4>}
+                <p>{x.intro}</p>
+
+                {
+                  x.missions.map((m) => (
+                    <div class="mission">
+                      <h4>{m.title}</h4>
+                      <ul>
+                        {m.points.map((p) => <li>{p}</li>)}
+                      </ul>
+                    </div>
+                  ))
+                }
+
+                {x.tools.length > 0 && <ul class="tags tools">{x.tools.map((tool) => <li class="tag">{tool}</li>)}</ul>}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Formation -->
+  <section class="section" id="formation">
+    <div class="container">
+      <p class="eyebrow">{t.education.eyebrow}</p>
+      <h2 class="section-title">{t.education.title}</h2>
+      <ol class="timeline">
+        {
+          education.map((e) => (
+            <li class="card">
+              <span class="period">{e.period}</span>
+              <h3>{e.title}</h3>
+              <p class="school">{e.school}</p>
+              {e.details && <p>{e.details}</p>}
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="extras">
+        <div>
+          <h3>{t.certifications}</h3>
+          <ul class="plain">
+            {certifications.map((c) => <li><strong>{c.name}</strong> — {c.issuer}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h3>{t.languagesTitle}</h3>
+          <ul class="tags">{languages.map((l) => <li class="tag">{l}</li>)}</ul>
+          <h3 class="mt">{t.interests}</h3>
+          <ul class="tags">{interests.map((i) => <li class="tag">{i}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projets par domaine -->
+  <section class="section" id="projets">
+    <div class="container">
+      <p class="eyebrow">{t.projects.eyebrow}</p>
+      <h2 class="section-title">{t.projects.title}</h2>
+      <p class="lead">{t.projects.lead}</p>
+
+      <div class="grid domains">
+        {
+          domains.map((d) => {
+            const n = countByDomain(d.slug);
+            return (
+              <a href={domainPath(lang, d.slug)} class="card domain-card">
+                <h3>{domainName(d.slug, lang)}</h3>
+                <p>{d.tagline[lang]}</p>
+                <span class:list={['badge', { 'badge-warn': n === 0 }]}>
+                  {n === 0 ? t.projects.soon : t.projects.count(n)}
+                </span>
+              </a>
+            );
+          })
+        }
+      </div>
+
+      {
+        featured.length > 0 && (
+          <>
+            <h3 class="featured-title">{t.projects.featured}</h3>
+            <div class="grid">
+              {featured.map((p) => <ProjectCard project={p} lang={lang} />)}
+            </div>
+          </>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Compétences -->
+  <section class="section" id="competences">
+    <div class="container">
+      <p class="eyebrow">{t.skills.eyebrow}</p>
+      <h2 class="section-title">{t.skills.title}</h2>
+      <div class="grid skills">
+        {
+          skills.map((s) => (
+            <div class="card skill">
+              <h3>{s.group}</h3>
+              <ul class="tags">{s.items.map((i) => <li class="tag">{i}</li>)}</ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Associations -->
+  <section class="section" id="associations">
+    <div class="container">
+      <p class="eyebrow">{t.associations.eyebrow}</p>
+      <h2 class="section-title">{t.associations.title}</h2>
+      <div class="grid assos">
+        {
+          associations.map((a) => (
+            <div class="card asso">
+              <span class="badge">{a.role}</span>
+              <h3>{a.name}</h3>
+              <p>{a.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="container contact">
+      <p class="eyebrow">{t.contact.eyebrow}</p>
+      <h2 class="section-title">{t.contact.title}</h2>
+      <p class="lead">{t.contact.lead}</p>
+      <p class="email"><a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a></p>
+      <div class="actions">
+        <a href={profile.contact.linkedin} class="btn btn-primary" target="_blank" rel="noopener">LinkedIn</a>
+        <a href={profile.contact.github} class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 4rem);
+  }
+
+  h1 {
+    font-size: clamp(2.3rem, 6vw, 3.8rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .accent {
+    color: var(--accent);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+    list-style: none;
+    padding: 1.5rem 0 0;
+    margin: 2.5rem 0 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .highlights li {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .highlights strong {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+  }
+
+  .highlights span {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .jobs {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .job {
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .job-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    flex: none;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+    display: grid;
+    place-items: center;
+    padding: 0.6rem;
+  }
+
+  .logo img {
+    width: 100%;
+    height: auto;
+  }
+
+  .logo span {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #0f766e;
+  }
+
+  .job-head h3 {
+    font-size: 1.3rem;
+  }
+
+  .job-head p {
+    margin: 0;
+  }
+
+  .company {
+    font-weight: 600;
+    margin-top: 0.3rem !important;
+  }
+
+  .sub {
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+
+  .job-body {
+    padding-top: 1.25rem;
+    max-width: 75ch;
+  }
+
+  .job-body h4 {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .job-body p {
+    margin: 0;
+  }
+
+  .mission {
+    margin-top: 1.75rem;
+  }
+
+  .mission ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .mission li + li {
+    margin-top: 0.35rem;
+  }
+
+  .tools {
+    margin-top: 1.75rem;
+  }
+
+  .assos {
+    margin-top: 2rem;
+  }
+
+  .asso {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  .asso h3 {
+    font-size: 1.15rem;
+  }
+
+  .asso p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .avatar {
+    width: clamp(160px, 26vw, 260px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow);
+    border: 6px solid var(--surface);
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar span {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
+    color: var(--accent-ink);
+  }
+
+  @media (max-width: 720px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .avatar {
+      order: -1;
+    }
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .timeline li {
+    padding: 1.5rem;
+    border-left: 4px solid var(--accent);
+  }
+
+  .timeline h3 {
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+  }
+
+  .timeline p {
+    margin: 0.25rem 0 0;
+    color: var(--muted);
+  }
+
+  .period {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .timeline .school {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .extras {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .extras h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .extras .mt {
+    margin-top: 1.5rem;
+  }
+
+  .plain {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--muted);
+  }
+
+  .plain strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .domains {
+    margin-top: 2rem;
+  }
+
+  .domain-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .domain-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+  }
+
+  .domain-card h3 {
+    font-size: 1.35rem;
+  }
+
+  .domain-card p {
+    margin: 0 0 0.5rem;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .featured-title {
+    font-size: 1.4rem;
+    margin: 3rem 0 1.25rem;
+  }
+
+  .skills {
+    margin-top: 2rem;
+  }
+
+  .skill {
+    padding: 1.5rem;
+  }
+
+  .skill h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .contact {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .email {
+    font-family: var(--font-head);
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    margin: 1.5rem 0 0;
+    overflow-wrap: anywhere;
+  }
+
+  .email a {
+    color: var(--accent);
+  }
+
+  .contact .actions {
+    justify-content: center;
+  }
+</style>

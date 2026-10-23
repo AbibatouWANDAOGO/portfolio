@@ -1,0 +1,330 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { domainName } from '../data/domains';
+import { formatDate, type Project } from '../data/projects';
+import { ui, homePath, domainPath, projectPath, langs, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+
+const { lang, project } = Astro.props;
+const t = ui[lang].project;
+const { title, summary, tools, date, status, github, notebook, demo, domain, draft } = project.entry.data;
+const name = domainName(domain, lang);
+const { Content, headings } = await render(project.entry);
+const sections = headings.filter((h) => h.depth === 2);
+const alternates = Object.fromEntries(langs.map((l) => [l, projectPath(l, project.slug)])) as Record<Lang, string>;
+---
+
+<Base lang={lang} alternates={alternates} title={title} description={summary}>
+  <article class="section">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href={homePath(lang, '#projets')}>{t.crumbs}</a>
+        <span>/</span>
+        <a href={domainPath(lang, domain)}>{name}</a>
+      </nav>
+
+      <header class="head">
+        <div class="meta">
+          <span class="badge">{name}</span>
+          {status === 'en cours' && <span class="badge badge-warn">{t.inProgress}</span>}
+          {draft && <span class="badge badge-warn">{t.draftUnpublished}</span>}
+          <span class="date">{formatDate(date, lang)}</span>
+        </div>
+        <h1>{title}</h1>
+        <p class="lead">{summary}</p>
+        {project.fallback && <p class="fallback">{t.fallback}</p>}
+        <div class="actions">
+          {notebook && <a href={notebook} class="btn btn-primary" target="_blank" rel="noopener">{t.notebook}</a>}
+          {
+            github ? (
+              <a href={github} class:list={['btn', notebook ? 'btn-ghost' : 'btn-primary']} target="_blank" rel="noopener">
+                {t.viewCode}
+              </a>
+            ) : (
+              <span class="btn btn-ghost disabled">{t.codeSoon}</span>
+            )
+          }
+          {demo && <a href={demo} class="btn btn-ghost" target="_blank" rel="noopener">{t.demo}</a>}
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside>
+          <div class="card side">
+            <h2>{t.tools}</h2>
+            <ul class="tags">{tools.map((tool) => <li class="tag">{tool}</li>)}</ul>
+          </div>
+          {
+            sections.length > 0 && (
+              <div class="card side toc">
+                <h2>{t.toc}</h2>
+                <ol>
+                  {sections.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+                </ol>
+              </div>
+            )
+          }
+        </aside>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </div>
+
+      <footer class="end">
+        <a href={domainPath(lang, domain)} class="btn btn-ghost">{t.others(name)}</a>
+        {github && <a href={github} class="btn btn-primary" target="_blank" rel="noopener">{t.source}</a>}
+      </footer>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .crumbs {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .crumbs a {
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--accent);
+  }
+
+  .head {
+    max-width: 780px;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .date {
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-transform: capitalize;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+  }
+
+  .fallback {
+    display: inline-block;
+    margin: 1rem 0 0;
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    background: var(--warn-soft);
+    color: var(--warn-ink);
+    font-size: 0.9rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .disabled {
+    color: var(--muted);
+    cursor: default;
+  }
+
+  .disabled:hover {
+    transform: none;
+    border-color: var(--line);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  aside {
+    position: sticky;
+    top: 5.5rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (max-width: 820px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    aside {
+      position: static;
+    }
+    .toc {
+      display: none;
+    }
+  }
+
+  .side {
+    padding: 1.25rem;
+  }
+
+  .side h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.85rem;
+  }
+
+  .toc ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+  }
+
+  .toc a {
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    color: var(--accent);
+  }
+
+  /* Contenu Markdown du projet : chaque "## Titre" devient une section numérotée */
+  .prose {
+    counter-reset: step;
+    max-width: 720px;
+  }
+
+  .prose :global(h2) {
+    counter-increment: step;
+    font-size: 1.6rem;
+    margin: 2.75rem 0 1rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .prose :global(h2)::before {
+    content: counter(step, decimal-leading-zero);
+    display: block;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+
+  .prose :global(h3) {
+    font-size: 1.2rem;
+    margin: 1.75rem 0 0.6rem;
+  }
+
+  .prose :global(p),
+  .prose :global(li) {
+    color: var(--ink);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.3rem;
+  }
+
+  .prose :global(li + li) {
+    margin-top: 0.3rem;
+  }
+
+  .prose :global(strong) {
+    font-weight: 600;
+  }
+
+  .prose :global(a) {
+    color: var(--accent);
+  }
+
+  .prose :global(code) {
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border-radius: 6px;
+    background: var(--surface-2);
+  }
+
+  .prose :global(pre) {
+    padding: 1rem;
+    border-radius: var(--radius);
+    overflow-x: auto;
+  }
+
+  .prose :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .prose :global(blockquote) {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .prose :global(blockquote p) {
+    margin: 0;
+  }
+
+  .prose :global(table) {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    font-size: 0.95rem;
+  }
+
+  .prose :global(th),
+  .prose :global(td) {
+    padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+
+  .prose :global(th) {
+    background: var(--surface-2);
+    font-weight: 600;
+  }
+
+  .prose :global(img) {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    margin: 1.25rem 0;
+  }
+
+  .end {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+</style>

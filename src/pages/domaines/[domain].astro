@@ -1,0 +1,10 @@
+---
+import DomainPage from '../../components/DomainPage.astro';
+import { domains } from '../../data/domains';
+
+export function getStaticPaths() {
+  return domains.map((domain) => ({ params: { domain: domain.slug }, props: { domain } }));
+}
+---
+
+<DomainPage lang="fr" domain={Astro.props.domain} />

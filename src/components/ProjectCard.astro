@@ -1,0 +1,70 @@
+---
+import type { Project } from '../data/projects';
+import { formatDate } from '../data/projects';
+import { ui, projectPath, type Lang } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const { title, summary, tools, date, status, draft } = project.entry.data;
+const t = ui[lang].project;
+---
+
+<a href={projectPath(lang, project.slug)} class="card project-card">
+  <div class="meta">
+    <span>{formatDate(date, lang)}</span>
+    {status === 'en cours' && <span class="badge badge-warn">{t.inProgress}</span>}
+    {draft && <span class="badge badge-warn">{t.draft}</span>}
+    {project.fallback && <span class="badge">FR</span>}
+  </div>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  <ul class="tags">
+    {tools.slice(0, 5).map((tool) => <li class="tag">{tool}</li>)}
+  </ul>
+  <span class="more">{t.more}</span>
+</a>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: capitalize;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .more {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+</style>

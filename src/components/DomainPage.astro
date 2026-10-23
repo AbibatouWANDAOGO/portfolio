@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from './ProjectCard.astro';
+import { domainName, type domains } from '../data/domains';
+import { getProjects } from '../data/projects';
+import { ui, homePath, domainPath, langs, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  domain: (typeof domains)[number];
+}
+
+const { lang, domain } = Astro.props;
+const t = ui[lang].domain;
+const name = domainName(domain.slug, lang);
+const projects = await getProjects(lang, domain.slug);
+const alternates = Object.fromEntries(langs.map((l) => [l, domainPath(l, domain.slug)])) as Record<Lang, string>;
+---
+
+<Base lang={lang} alternates={alternates} title={name} description={domain.description[lang]}>
+  <section class="section">
+    <div class="container">
+      <a href={homePath(lang, '#projets')} class="back">{t.back}</a>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h1>{name}</h1>
+      <p class="lead">{domain.description[lang]}</p>
+
+      {
+        projects.length > 0 ? (
+          <div class="grid list">
+            {projects.map((p) => <ProjectCard project={p} lang={lang} />)}
+          </div>
+        ) : (
+          <div class="card empty">
+            <h2>{t.emptyTitle}</h2>
+            <p>{t.emptyText}</p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .back:hover {
+    color: var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin-bottom: 1rem;
+  }
+
+  .list {
+    margin-top: 2.5rem;
+  }
+
+  .empty {
+    margin-top: 2.5rem;
+    padding: 2.5rem;
+    text-align: center;
+    border-style: dashed;
+    box-shadow: none;
+  }
+
+  .empty h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty p {
+    margin: 0;
+    color: var(--muted);
+  }
+</style>

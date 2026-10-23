@@ -1,0 +1,213 @@
+---
+import '../styles/global.css';
+import { profile, content } from '../data/profile';
+import { ui, url, homePath, languages, langs, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  // Adresse de la même page dans chaque langue (pour le sélecteur FR | EN)
+  alternates: Record<Lang, string>;
+  title?: string;
+  description?: string;
+}
+
+const { lang, alternates, title, description = content[lang].intro } = Astro.props;
+const t = ui[lang];
+const fullName = `${profile.firstName} ${profile.lastName}`;
+const pageTitle = title ? `${title} · ${fullName}` : `${fullName} — Portfolio`;
+
+const nav = [
+  { label: t.nav.experience, href: homePath(lang, '#experience') },
+  { label: t.nav.education, href: homePath(lang, '#formation') },
+  { label: t.nav.projects, href: homePath(lang, '#projets') },
+  { label: t.nav.skills, href: homePath(lang, '#competences') },
+  { label: t.nav.contact, href: homePath(lang, '#contact') },
+];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {langs.map((l) => <link rel="alternate" hreflang={l} href={alternates[l]} />)}
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <slot name="head" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href={homePath(lang)} class="logo">{profile.firstName}<span>.</span></a>
+        <nav aria-label="Navigation">
+          <ul>
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="lang-switch">
+          {
+            langs.map((l) =>
+              l === lang ? (
+                <span aria-current="true">{languages[l]}</span>
+              ) : (
+                <a href={alternates[l]} hreflang={l} lang={l} title={ui[l].switchTo} data-lang={l}>
+                  {languages[l]}
+                </a>
+              ),
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© {new Date().getFullYear()} {fullName}</p>
+        <ul>
+          <li><a href={profile.contact.github} target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href={profile.contact.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <script>
+      // Garde la section en cours (#projets…) quand on change de langue, et mémorise le choix.
+      document.querySelectorAll<HTMLAnchorElement>('.lang-switch a').forEach((link) => {
+        link.addEventListener('click', () => {
+          try {
+            localStorage.setItem('lang', link.dataset.lang ?? '');
+          } catch {}
+          if (location.hash && !link.hash) link.hash = location.hash;
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    min-height: 4rem;
+    flex-wrap: wrap;
+    padding-block: 0.5rem;
+  }
+
+  .logo {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  .logo span {
+    color: var(--accent);
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  nav a:hover {
+    color: var(--ink);
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .lang-switch a,
+  .lang-switch span {
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+
+  .lang-switch span {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .lang-switch a {
+    color: var(--muted);
+  }
+
+  .lang-switch a:hover {
+    color: var(--ink);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding-block: 2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-inner p {
+    margin: 0;
+  }
+
+  .footer-inner ul {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-inner a {
+    text-decoration: none;
+  }
+
+  .footer-inner a:hover {
+    color: var(--accent);
+  }
+</style>

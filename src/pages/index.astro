@@ -1,0 +1,16 @@
+---
+import Home from '../components/Home.astro';
+import { homePath } from '../i18n/ui';
+---
+
+<Home lang="fr">
+  <script is:inline slot="head" define:vars={{ enHome: homePath('en') }}>
+    // Première visite : un navigateur non francophone est envoyé vers la version anglaise.
+    // Une fois que la personne a choisi FR ou EN dans le menu, son choix est respecté.
+    try {
+      const saved = localStorage.getItem('lang');
+      const prefersFrench = (navigator.languages || [navigator.language]).some((l) => l.toLowerCase().startsWith('fr'));
+      if (saved === 'en' || (!saved && !prefersFrench)) location.replace(enHome + location.hash);
+    } catch {}
+  </script>
+</Home>
