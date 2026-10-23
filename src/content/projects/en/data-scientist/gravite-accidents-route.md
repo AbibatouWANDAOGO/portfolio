@@ -4,6 +4,8 @@ domain: data-scientist
 summary: Using the 125,000 people involved in road accidents in France in 2023 (BAAC open data), an XGBoost model that flags 58% of fatal cases, after detecting and fixing a data leak that inflated scores by 11 points.
 date: 2025-11-15 # À AJUSTER
 tools: [Python, Pandas, Scikit-learn, XGBoost, Random Forest, Pipeline, Seaborn]
+github: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction
+notebook: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb
 status: terminé
 featured: true
 ---

@@ -4,6 +4,8 @@ domain: data-scientist
 summary: À partir des 125 000 personnes impliquées dans un accident en France en 2023 (open data BAAC), un modèle XGBoost qui repère 58 % des accidents mortels, après avoir détecté et corrigé une fuite de données qui gonflait les scores de 11 points.
 date: 2025-11-15 # À AJUSTER
 tools: [Python, Pandas, Scikit-learn, XGBoost, Random Forest, Pipeline, Seaborn]
+github: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction
+notebook: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb
 status: terminé
 featured: true
 ---
