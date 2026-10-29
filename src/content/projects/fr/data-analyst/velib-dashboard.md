@@ -1,58 +1,77 @@
 ---
 title: Dashboard Vélib' en temps réel
 domain: data-analyst
-summary: Un dashboard web interactif qui analyse l'occupation des 1 511 stations Vélib' de Paris pour repérer les zones délaissées, normales et saturées.
-date: 2026-04-14
-tools: [Python, Pandas, Dash, Plotly, SQLite, Requests, API GBFS]
-# github: https://github.com/AbibatouWANDAOGO/velib-dashboard
+summary: Une application web Dash qui suit en temps réel les 1 500 stations Vélib' de Paris, avec une carte interactive, des analyses et un tableau de bord de maintenance. Projet en binôme.
+date: 2026-06-13
+tools: [Python, Dash, Plotly, Pandas, SQLite, API GBFS, Pytest]
+github: https://github.com/AbibatouWANDAOGO/velib-dashboard
 status: terminé
 featured: true
 ---
 
 ## Contexte
 
-Vélib' Métropole est un service de mobilité essentiel à Paris et en petite couronne. Ses données sont publiques (Open Data) et mises à jour en continu via l'API **GBFS** (General Bikeshare Feed Specification).
+Vélib' Métropole est un service de mobilité essentiel à Paris et en petite couronne : environ **1 500 stations** et près de **20 000 vélos** disponibles à un instant donné. Ses données sont publiques et mises à jour en continu via l'API **GBFS** (General Bikeshare Feed Specification).
 
-Réalisé dans le cadre du cours de Python avancé, ce projet consistait à concevoir un dashboard complet à partir de données ouvertes réelles : récupération, nettoyage, stockage et visualisation.
+Projet réalisé **en binôme avec Youcef Guediri** dans le cadre du cours de Python avancé. L'objectif était de concevoir un dashboard complet à partir de données ouvertes réelles : récupération, nettoyage, stockage, visualisation et tests.
+
+![Page d'accueil du dashboard : indicateurs clés et répartition des vélos](/portfolio/images/velib/01_accueil.jpg)
 
 ## Problème
 
-Comment savoir, à un instant donné, **où le réseau est déséquilibré** ?
+Comment savoir, à un instant donné, **où le réseau est déséquilibré** et **où intervenir** ?
 
-- Les **usagers** veulent trouver rapidement une station avec des vélos disponibles.
-- Les **gestionnaires** doivent savoir où rééquilibrer les vélos entre stations.
-- Les **décideurs** veulent identifier les zones sous-desservies pour planifier l'extension du réseau.
+- Les **usagers** veulent trouver rapidement une station avec des vélos, ou une place libre pour rendre le leur.
+- Les **équipes d'exploitation** doivent repérer les stations vides ou pleines pour rééquilibrer le réseau.
+- Les **gestionnaires** veulent une vue d'ensemble : taux de disponibilité, part de vélos électriques, zones sous tension.
 
 ## Solution
 
-Une application web multi-pages construite avec **Dash** :
+Une application web de **5 pages** construite avec **Dash** et **Plotly** :
 
-1. **Collecte** : deux flux de l'API GBFS sont récupérés, les informations statiques (nom, position, capacité) et le statut en temps réel (vélos et bornes disponibles).
-2. **Nettoyage** : les deux sources sont fusionnées sur `station_id`, puis on calcule le taux d'occupation `vélos disponibles / capacité` et la part de vélos électriques.
-3. **Catégorisation** : chaque station est classée **délaissée** (< 5 %), **normale** (5–95 %) ou **saturée** (> 95 %).
-4. **Stockage** : les données sont sauvegardées en CSV et dans une base **SQLite**. Un mode « production » lit directement la base, et un script la met à jour toutes les 5 minutes.
-5. **Visualisation** : le dashboard comporte trois pages :
-   - **Accueil** : indicateurs globaux.
-   - **Carte** : les 1 511 stations, colorées selon leur zone.
-   - **Statistiques** : histogramme, répartition par zone et top 10 des stations les plus occupées.
+1. **Collecte** : deux flux de l'API GBFS, les informations statiques (nom, position, capacité) et le statut en temps réel (vélos mécaniques, vélos électriques, places libres).
+2. **Nettoyage et fusion** : alignement des deux sources sur `station_id`, extraction des types de vélos, puis calcul des indicateurs (taux de disponibilité et d'occupation, part d'électriques, station opérationnelle ou non).
+3. **Stockage** : les données sont sauvegardées en CSV et dans une base **SQLite**. Si l'API ne répond pas, le dashboard bascule automatiquement sur les dernières données enregistrées.
+4. **Visualisation** :
+   - **Accueil** : indicateurs clés et répartition mécaniques / électriques.
+   - **Carte** : les 1 500 stations colorées par état, avec filtres, chiffres clés et recherche de station.
+   - **Analyse** : filtres par nombre de vélos et type de vélo, capacité contre disponibilité, distribution des taux d'occupation.
+   - **Maintenance** : stations à traiter en priorité, sur une carte et dans un tableau filtrable.
+   - **À propos** : sources et méthodologie.
+5. **Qualité** : le code est organisé en modules (`utils`, `pages`, `components`), documenté avec des docstrings et des annotations de type, testé avec **pytest** et vérifié avec `mypy` et `ruff`.
 
-Le code est organisé en modules : `utils` pour les données, `pages`, `components` et `callbacks`. Il est documenté avec des docstrings et des type hints, et vérifié avec `ruff`.
+![Carte des stations : état de chaque station en temps réel](/portfolio/images/velib/03_carte.jpg)
+*Chaque station est colorée selon son état : vide (aucun vélo), pleine (aucune place pour rendre un vélo), presque vide (5 vélos ou moins) ou disponible. La taille du point dépend de la capacité de la station.*
+
+![Recherche d'une station : la carte zoome sur Châtelet](/portfolio/images/velib/04_carte_recherche.jpg)
+*La recherche ignore les accents et les majuscules : « Châtelet » trouve la station « Victoria - Place du Chatelet ». La carte zoome dessus et la met en évidence.*
+
+![Page d'analyse : capacité, disponibilité et taux d'occupation](/portfolio/images/velib/02_analyse.jpg)
+
+![Page maintenance : stations critiques et urgentes à traiter](/portfolio/images/velib/05_insights.jpg)
+*Une station est **critique** si elle est vide ou pleine, et **urgente** si elle est déséquilibrée à plus de 90 % ou n'a aucun vélo électrique. Le tableau se filtre par gravité, zone et type de problème.*
 
 ## Difficultés rencontrées
 
-- **Dépendance à l'API** : si l'API est lente ou indisponible, le dashboard ne doit pas planter. J'ai ajouté un cache local de 5 minutes et une base SQLite pour que l'application fonctionne même hors ligne.
-- **Fusion de deux sources** : les informations statiques et le statut temps réel arrivent séparément. Il a fallu les aligner proprement sur l'identifiant de station.
-- **Choix des seuils** : il fallait définir des seuils simples et lisibles pour qualifier une station de « délaissée » ou « saturée ».
-- **Architecture multi-pages** : il fallait structurer le routing et les callbacks Dash pour que l'ajout d'une page reste simple.
+- **La dépendance à l'API** : si l'API Vélib' est lente ou indisponible, le dashboard ne doit pas planter. Il se replie donc sur les dernières données enregistrées, en CSV ou en base SQLite.
+- **Des formats de données différents** : dans le JSON de l'API, les vélos mécaniques et électriques sont imbriqués dans une liste, alors que l'export CSV les présente à plat. Il a fallu les extraire pour que le même pipeline traite les deux sources.
+- **Une carte devenue vide après une mise à jour** : Plotly a supprimé `scatter_mapbox` à partir de sa version 6. Toute nouvelle installation affichait donc une page Carte vide. J'ai migré les deux cartes vers `scatter_map` (MapLibre) et fixé la version minimale de Plotly pour que le problème ne revienne pas.
+- **Une recherche sensible aux accents** : la liste déroulante de Dash 4 compare le texte tel quel. Taper « Châtelet » ne trouvait donc pas « Chatelet ». J'ai remplacé la liste par un champ de recherche traité côté serveur, qui ignore les accents et les majuscules.
 
 ## Résultats
 
-| Zone      | Stations | Part   | Occupation moyenne |
-| --------- | -------- | ------ | ------------------ |
-| Délaissée | ~50      | 3,3 %  | 2,5 %              |
-| Normale   | ~1 450   | 96 %   | 50 %               |
-| Saturée   | ~10      | 0,7 %  | 98 %               |
+Relevé en temps réel du **29 octobre 2026 à 22h28** :
 
-> Le réseau est globalement bien équilibré (96 % de stations en occupation normale). Quelques stations saturent aux heures de pointe, près des gares et des centres commerciaux, et certains quartiers périphériques restent sous-desservis.
+| Indicateur | Valeur |
+| --- | --- |
+| Stations opérationnelles | **1 500** sur 1 520 |
+| Vélos disponibles | **≈ 19 000**, dont **39 %** électriques |
+| Places libres pour rendre un vélo | **≈ 28 000** |
+| Stations disponibles / presque vides / vides / pleines | **71 %** / 24 % / 2,9 % / 1,7 % |
+| Stations à traiter en maintenance | **68 critiques** et 297 urgentes (76 % du réseau en bon état) |
 
-**Pistes d'amélioration** : prédiction de la demande par machine learning, historisation des données pour analyser l'évolution dans le temps, alertes en temps réel.
+> Le réseau est globalement bien servi : 7 stations sur 10 ont plus de 5 vélos. Mais près d'une station sur quatre est presque vide, et 68 stations, vides ou pleines, bloquent les usagers au moment du relevé. Ce sont les priorités des équipes de rééquilibrage.
+
+**Améliorations apportées après le rendu** : chargement des données en temps réel avec un bouton « Actualiser », réparation des deux cartes, coloration par état, chiffres clés recalculés selon les filtres et recherche de station.
+
+**Pistes d'amélioration** : historiser les relevés pour analyser l'évolution selon l'heure et le jour, prédire la demande par station, et mettre l'application en ligne (Render ou Railway).

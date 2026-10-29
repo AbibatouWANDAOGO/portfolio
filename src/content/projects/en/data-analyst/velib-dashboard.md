@@ -1,58 +1,79 @@
 ---
 title: Real-time Vélib' Dashboard
 domain: data-analyst
-summary: An interactive web dashboard analysing the occupancy of Paris's 1,511 Vélib' bike-sharing stations to spot underused, balanced and saturated areas.
-date: 2026-04-14
-tools: [Python, Pandas, Dash, Plotly, SQLite, Requests, GBFS API]
-# github: https://github.com/AbibatouWANDAOGO/velib-dashboard
+summary: A Dash web app that tracks Paris's 1,500 Vélib' bike-sharing stations in real time, with an interactive map, analyses and a maintenance dashboard. Built as a pair.
+date: 2026-06-13
+tools: [Python, Dash, Plotly, Pandas, SQLite, GBFS API, Pytest]
+github: https://github.com/AbibatouWANDAOGO/velib-dashboard
 status: terminé
 featured: true
 ---
 
 ## Context
 
-Vélib' Métropole is a key mobility service in Paris and its inner suburbs. Its data is public (Open Data) and continuously updated through the **GBFS** API (General Bikeshare Feed Specification).
+Vélib' Métropole is a key mobility service in Paris and its inner suburbs: about **1,500 stations** and nearly **20,000 bikes** available at any given time. Its data is public and continuously updated through the **GBFS** API (General Bikeshare Feed Specification).
 
-Built for the advanced Python course, this project consisted of designing a complete dashboard from real open data: collection, cleaning, storage and visualisation.
+I built this project **with Youcef Guediri** for the advanced Python course. The goal was to design a complete dashboard from real open data: collection, cleaning, storage, visualisation and testing.
+
+![Dashboard home page: key indicators and bike breakdown](/portfolio/images/velib/01_accueil.jpg)
 
 ## Problem
 
-How can we tell, at any given moment, **where the network is unbalanced**?
+How can we tell, at any given moment, **where the network is unbalanced** and **where to step in**?
 
-- **Users** want to quickly find a station with bikes available.
-- **Operators** need to know where to rebalance bikes between stations.
-- **Decision-makers** want to identify under-served areas to plan the network's expansion.
+- **Riders** want to quickly find a station with bikes, or a free dock to return theirs.
+- **Operations teams** need to spot empty or full stations to rebalance the network.
+- **Managers** want an overview: availability rate, share of e-bikes, areas under pressure.
 
 ## Solution
 
-A multi-page web application built with **Dash**:
+A **5-page** web application built with **Dash** and **Plotly**:
 
-1. **Collection**: two GBFS feeds are fetched, static information (name, location, capacity) and real-time status (available bikes and docks).
-2. **Cleaning**: the two sources are merged on `station_id`, then the occupancy rate `available bikes / capacity` and the share of e-bikes are computed.
-3. **Categorisation**: each station is classified as **underused** (< 5%), **balanced** (5–95%) or **saturated** (> 95%).
-4. **Storage**: data is saved as CSV and in a **SQLite** database. A "production" mode reads directly from the database, and a script refreshes it every 5 minutes.
-5. **Visualisation**: the dashboard has three pages:
-   - **Home**: global indicators.
-   - **Map**: all 1,511 stations, coloured by category.
-   - **Statistics**: histogram, breakdown by category and top 10 busiest stations.
+1. **Collection**: two GBFS feeds, static information (name, location, capacity) and real-time status (mechanical bikes, e-bikes, free docks).
+2. **Cleaning and merging**: both sources are aligned on `station_id`, bike types are extracted, then indicators are computed (availability and occupancy rates, share of e-bikes, whether the station is operational).
+3. **Storage**: data is saved as CSV and in a **SQLite** database. If the API does not respond, the dashboard automatically falls back to the latest saved data.
+4. **Visualisation**:
+   - **Home**: key indicators and mechanical / e-bike breakdown.
+   - **Map**: all 1,500 stations coloured by status, with filters, key figures and station search.
+   - **Analysis**: filters by number and type of bikes, capacity vs availability, distribution of occupancy rates.
+   - **Maintenance**: stations to handle first, on a map and in a filterable table.
+   - **About**: sources and methodology.
+5. **Quality**: the code is organised into modules (`utils`, `pages`, `components`), documented with docstrings and type hints, tested with **pytest** and checked with `mypy` and `ruff`.
 
-The code is organised into modules: `utils` for data, `pages`, `components` and `callbacks`. It is documented with docstrings and type hints, and checked with `ruff`.
+![Station map: real-time status of every station](/portfolio/images/velib/03_carte.jpg)
+*Each station is coloured by status: empty (no bikes), full (no dock to return a bike), almost empty (5 bikes or fewer) or available. Dot size reflects the station's capacity.*
+
+![Station search: the map zooms in on Châtelet](/portfolio/images/velib/04_carte_recherche.jpg)
+*The search ignores accents and case: typing "Châtelet" finds the "Victoria - Place du Chatelet" station. The map zooms in and highlights it.*
+
+![Analysis page: capacity, availability and occupancy rates](/portfolio/images/velib/02_analyse.jpg)
+
+![Maintenance page: critical and urgent stations to handle](/portfolio/images/velib/05_insights.jpg)
+*A station is **critical** when it is empty or full, and **urgent** when it is more than 90% unbalanced or has no e-bikes. The table can be filtered by severity, area and type of problem.*
 
 ## Challenges
 
-- **Dependence on the API**: if the API is slow or down, the dashboard must not crash. I added a 5-minute local cache and a SQLite database so the app works even offline.
-- **Merging two sources**: static information and real-time status arrive separately. They had to be aligned cleanly on the station ID.
-- **Choosing thresholds**: simple, readable thresholds were needed to label a station as "underused" or "saturated".
-- **Multi-page architecture**: Dash routing and callbacks had to be structured so that adding a page stays simple.
+- **Depending on the API**: if the Vélib' API is slow or down, the dashboard must not crash. It falls back to the latest saved data, from CSV or the SQLite database.
+- **Different data formats**: in the API's JSON, mechanical bikes and e-bikes are nested in a list, whereas the CSV export lists them flat. They had to be extracted so that the same pipeline handles both sources.
+- **A map that went blank after an update**: Plotly removed `scatter_mapbox` in version 6, so any fresh install showed an empty Map page. I migrated both maps to `scatter_map` (MapLibre) and pinned the minimum Plotly version so the problem does not come back.
+- **An accent-sensitive search**: Dash 4's dropdown compares text as typed, so "Châtelet" did not find "Chatelet". I replaced it with a server-side search field that ignores accents and case.
 
 ## Results
 
-| Category   | Stations | Share  | Average occupancy |
-| ---------- | -------- | ------ | ----------------- |
-| Underused  | ~50      | 3.3%   | 2.5%              |
-| Balanced   | ~1,450   | 96%    | 50%               |
-| Saturated  | ~10      | 0.7%   | 98%               |
+Real-time snapshot from **29 October 2026 at 10:28 pm**:
 
-> The network is well balanced overall (96% of stations at normal occupancy). A few stations saturate at peak hours, near train stations and shopping centres, and some outer districts remain under-served.
+| Indicator | Value |
+| --- | --- |
+| Operational stations | **1,500** out of 1,520 |
+| Available bikes | **≈ 19,000**, of which **39%** are e-bikes |
+| Free docks to return a bike | **≈ 28,000** |
+| Available / almost empty / empty / full stations | **71%** / 24% / 2.9% / 1.7% |
+| Stations needing maintenance | **68 critical** and 297 urgent (76% of the network in good shape) |
 
-**Next steps**: demand forecasting with machine learning, storing historical data to analyse trends over time, and real-time alerts.
+> The network is well served overall: 7 stations out of 10 have more than 5 bikes. But nearly one station in four is almost empty, and 68 stations, empty or full, were blocking riders at the time of the snapshot. These are the priorities for the rebalancing teams.
+
+**Improvements made after the submission**: real-time data loading with a "Refresh" button, both maps fixed, colouring by status, key figures that follow the filters, and station search.
+
+**Next steps**: store snapshots over time to analyse patterns by hour and day, forecast demand per station, and deploy the app online (Render or Railway).
+
+*Screenshots are in French.*
