@@ -1,7 +1,7 @@
 ---
 title: Road Accident Detection and Prediction
 domain: data-scientist
-summary: Design study of an AI system that detects accidents in real time and predicts high-risk situations (group project), then put into practice on the 125,000 people involved in road accidents in France in 2023.
+summary: Solution design for an AI system that detects road accidents in real time and anticipates high-risk situations (team project), followed by a hands-on application to the 125,000 people involved in road accidents in France in 2023.
 date: 2025-10-16
 tools: [Computer vision, YOLOv8, LSTM / GRU, ST-GCN, Sensor fusion, Python, XGBoost]
 github: https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction
@@ -11,65 +11,65 @@ status: terminé
 
 ## Context
 
-Group project at ESIEE Paris with **Samba Diallo** and **Youcef Guederi**, on the topic of AI for intelligent transport. Among several possible subjects (driver behaviour, traffic prediction, object detection, intrusion detection…), we chose **accident detection**.
+A team project at ESIEE Paris with **Samba Diallo** and **Youcef Guederi**, focused on AI for intelligent transportation systems. Among several possible topics (driver behavior, traffic forecasting, object detection, intrusion detection, etc.), we chose **accident detection**.
 
-It is a **design study**: defining the objectives, identifying the available data and choosing suitable methods, before any implementation.
+This is a **solution design study**: defining objectives, identifying available data sources and selecting appropriate methods ahead of implementation.
 
 ## Problem
 
-After an accident, every minute counts. And many accidents happen on the same stretches of road. We set ourselves two goals:
+In the aftermath of an accident, every minute counts, and accidents tend to cluster on the same stretches of road. We set two objectives:
 
-1. **Detect immediately** that an accident has just happened, to alert emergency services or trigger an automatic action (braking, reporting).
-2. **Predict where and when** an accident is likely to happen (*hotspots*), so action can be taken upstream: signage, traffic management.
+1. **Detect accidents as they happen**, to alert emergency services or trigger an automated response (braking, incident reporting).
+2. **Predict where and when accidents are likely to occur** (*hotspots*), so that preventive measures can be taken, such as signage or traffic management.
 
-## Solution
+## Approach
 
 ### 1. Real-time detection
 
-- **Sources**: road and city cameras, dashcams, on-board cameras (buses, taxis), vehicle sensors (accelerometer, gyroscope, ABS, CAN bus), acoustic sensors, automatic emergency calls.
-- **Data**: video streams, acceleration and orientation time series, audio signals, metadata (GPS, timestamp, speed).
+- **Data sources**: roadside and city cameras, dashcams, onboard cameras (buses, taxis), vehicle sensors (accelerometer, gyroscope, ABS, CAN bus), acoustic sensors and automatic emergency calls (eCall).
+- **Data types**: video streams, acceleration and orientation time series, audio signals and metadata (GPS, timestamp, speed).
 - **Methods**:
-  - **Computer vision**: object detectors (YOLOv5/v8, EfficientDet) spot the vehicles. Action recognition models (3D-CNN, I3D, Temporal ConvNets) recognise a crash, a fall or a stopped vehicle.
-  - **Sensor fusion**: business rules combined with sequence models (LSTM, GRU, temporal Transformer) cross-reference accelerometer, GPS and speed.
+  - **Computer vision**: object detectors (YOLOv5/v8, EfficientDet) to locate vehicles, and action recognition models (3D-CNN, I3D, temporal ConvNets) to identify collisions, falls or stopped vehicles.
+  - **Sensor fusion**: business rules combined with sequence models (LSTM, GRU, temporal Transformers) that correlate accelerometer, GPS and speed signals.
 
 ### 2. Predicting high-risk areas
 
-- **Sources**: accident history, real-time traffic, weather, local events, road conditions (roadworks), IoT traffic-flow sensors and socio-demographic data.
-- **Data**: time series, spatial data split into a grid, categorical variables, satellite and Street View images for the state of the infrastructure.
-- **Methods**: spatio-temporal models (ST-GCN, ConvLSTM, Prophet with explanatory variables), geostatistical *hotspot* analysis and supervised risk classification per road segment.
+- **Data sources**: historical accident records, real-time traffic, weather, local events, road conditions (construction work), IoT traffic sensors and socio-demographic data.
+- **Data types**: time series, gridded spatial data, categorical variables, and satellite and Street View imagery to assess infrastructure condition.
+- **Methods**: spatio-temporal models (ST-GCN, ConvLSTM, Prophet with exogenous regressors), geostatistical *hotspot* analysis and supervised risk classification at the road-segment level.
 
 ## Challenges
 
-- **Sensor synchronisation**: cameras, accelerometers and GPS have neither the same frequency nor the same clock. Fusing them requires precise time alignment, otherwise the model compares events that are out of sync.
-- **Bias in historical data**: sensors are only installed on some roads. The model risks labelling areas as "safe" simply because they are poorly observed.
-- **Choice of methods**: we had to find the right trade-off between accuracy and the real-time constraint for detection.
+- **Sensor synchronization**: cameras, accelerometers and GPS operate at different frequencies and on different clocks. Fusing them requires precise time alignment; otherwise the model compares events that are out of sync.
+- **Bias in historical data**: sensors cover only part of the road network, so the model risks labeling areas as "safe" simply because they are under-monitored.
+- **Method selection**: detection required striking the right balance between accuracy and real-time latency constraints.
 
 ## Results
 
-The deliverable is a **complete solution architecture** for both use cases. For each one, it specifies the data sources, the data types, the suitable model families and the main risks.
+The deliverable is an **end-to-end solution architecture** for both use cases, specifying for each the data sources, data types, suitable model families and key risks.
 
-> This work taught me to **frame an AI project before writing code**: start from the business need, list the data that is actually available and anticipate biases. These steps determine the quality of the final model.
+> This project taught me to **scope an AI project before writing any code**: start from the business need, inventory the data that is actually available, and anticipate potential biases. These upstream decisions largely determine the quality of the final model.
 
-## Putting it into practice on real data
+## Applying the design to real-world data
 
-To test this design against reality, I worked on the **prediction** part using French open accident data (BAAC 2023): **54,822 accidents** and **125,789 people involved**. For each person, the goal is to predict injury severity from the circumstances, the road, the vehicle and their profile.
+To test this design against real data, I implemented the **prediction** component using France's open road accident data (BAAC 2023): **54,822 accidents** involving **125,789 people**. The goal is to predict each person's injury severity based on the circumstances of the accident, the road, the vehicle and the person's profile.
 
 ![Injury severity of people involved in road accidents in 2023](/portfolio/images/accidents/severity_distribution.png)
-*Serious cases are rare: 15% hospitalised and 2.7% killed. This imbalance is what makes prediction hard.*
+*Severe outcomes are rare: 15% hospitalized and 2.7% killed. This class imbalance is what makes the prediction task challenging.*
 
-The data confirms the value of **targeting high-risk situations**, as the study anticipated:
+The data supports the study's emphasis on **targeting high-risk situations**:
 
-![Share of serious injuries by area, lighting and age](/portfolio/images/accidents/severe_rate_by_context.png)
-*Outside built-up areas, the share of people killed or hospitalised is twice as high as in town (26% vs 13%). It reaches 27% at night without street lighting and 32% over age 75.*
+![Share of severe injuries by area, lighting conditions and age](/portfolio/images/accidents/severe_rate_by_context.png)
+*Outside built-up areas, the share of people killed or hospitalized is twice as high as in urban areas (26% vs. 13%). It reaches 27% at night on unlit roads and 32% among people over 75.*
 
-**Model result:** an XGBoost trained with class weighting flags **58% of fatal cases**, compared with 7% without weighting. In return, it raises many false alarms (15% precision on fatal cases): it is meant to prioritise high-risk situations, not to make a diagnosis.
+**Model performance:** an XGBoost model trained with class weighting identifies **58% of fatal cases**, compared with 7% without weighting. The trade-off is a high false-alarm rate (15% precision on fatal cases): the model is designed to prioritize high-risk situations, not to deliver a diagnosis.
 
 ![Confusion matrices before and after class weighting](/portfolio/images/accidents/confusion_matrices.png)
 
-**A risk we anticipated, confirmed in practice:** the study flagged biases in historical data. In practice, the trap was in merging the tables: duplicates inflated the first model's score by **11 points**. I detected and fixed them before any modelling.
+**An anticipated risk, confirmed in practice:** the design study had flagged bias in historical data. In practice, the pitfall lay in the table joins: duplicate rows inflated the first model's score by **11 percentage points**. I detected and fixed the issue before any modeling.
 
-👉 Full details: [Predicting Road Accident Severity](/portfolio/en/projects/data-scientist/gravite-accidents-route) · [notebook](https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb)
+👉 Full case study: [Predicting Road Accident Severity](/portfolio/en/projects/data-scientist/gravite-accidents-route) · [notebook](https://github.com/AbibatouWANDAOGO/road-accident-severity-prediction/blob/main/accident_severity_prediction.ipynb)
 
-**Next step**: a prototype of the real-time detection part, using YOLOv8 on a public dataset of accident videos.
+**Next step**: prototype the real-time detection component using YOLOv8 on a public dataset of accident videos.
 
-*Charts are labelled in French.*
+*Chart labels are in French.*

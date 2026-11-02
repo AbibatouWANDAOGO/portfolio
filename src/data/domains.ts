@@ -12,7 +12,7 @@ export const domains = [
     },
     description: {
       fr: "Conception d'agents intelligents et de systèmes d'IA : apprentissage par renforcement, deep learning, intégration de modèles.",
-      en: 'Designing intelligent agents and AI systems: reinforcement learning, deep learning, model integration.',
+      en: 'Designing intelligent agents and AI systems, from reinforcement learning and deep learning to model integration.',
     },
   },
   {
@@ -20,11 +20,11 @@ export const domains = [
     name: 'Data Scientist',
     tagline: {
       fr: 'Modélisation, prédiction, machine learning',
-      en: 'Modelling, prediction, machine learning',
+      en: 'Modeling, forecasting, machine learning',
     },
     description: {
       fr: 'Construire des modèles prédictifs à partir de données réelles : préparation, feature engineering, entraînement et évaluation.',
-      en: 'Building predictive models from real-world data: preparation, feature engineering, training and evaluation.',
+      en: 'Building predictive models on real-world data, covering data preparation, feature engineering, training and evaluation.',
     },
   },
   {
@@ -32,11 +32,11 @@ export const domains = [
     name: 'Data Analyst',
     tagline: {
       fr: 'Dashboards, visualisation, aide à la décision',
-      en: 'Dashboards, visualisation, decision support',
+      en: 'Dashboards, data visualization, decision support',
     },
     description: {
       fr: 'Transformer des données brutes en indicateurs lisibles : nettoyage, analyse exploratoire et tableaux de bord (Power BI, Excel, Dash).',
-      en: 'Turning raw data into clear indicators: cleaning, exploratory analysis and dashboards (Power BI, Excel, Dash).',
+      en: 'Turning raw data into actionable insights through data cleaning, exploratory analysis and dashboards (Power BI, Excel, Dash).',
     },
   },
   {
@@ -48,7 +48,7 @@ export const domains = [
     },
     description: {
       fr: 'Collecter, stocker et acheminer la donnée de façon fiable : pipelines, bases de données, conteneurisation et CI/CD.',
-      en: 'Collecting, storing and moving data reliably: pipelines, databases, containerisation and CI/CD.',
+      en: 'Building reliable data infrastructure: ingestion pipelines, databases, containerization and CI/CD.',
     },
   },
   {
@@ -60,7 +60,7 @@ export const domains = [
     },
     description: {
       fr: 'Les fondations : statistiques descriptives et inférentielles, fouille de données et algorithmique.',
-      en: 'The foundations: descriptive and inferential statistics, data mining and algorithms.',
+      en: 'The analytical foundations: descriptive and inferential statistics, data mining and algorithms.',
     },
   },
 ] as const;

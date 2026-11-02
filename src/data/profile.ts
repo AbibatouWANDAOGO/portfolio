@@ -150,15 +150,15 @@ const fr = {
 
 // ───────────────────────────── ENGLISH ─────────────────────────────
 const en: typeof fr = {
-  role: 'Data engineering apprentice · BNP Paribas CIB × ESIEE Paris',
+  role: 'Data Engineering Apprentice · BNP Paribas CIB × ESIEE Paris',
   intro:
-    "Passionate about data science and AI innovation, I'm a Data Analyst apprentice at BNP Paribas CIB while " +
-    "completing the Data & Applications engineering programme at ESIEE Paris. I enjoy starting from raw data and " +
-    'turning it into analyses, models and dashboards that support decision-making.',
+    "I'm a Data Analyst apprentice at BNP Paribas CIB, pursuing a Master's-level engineering degree in Data & Applications " +
+    'at ESIEE Paris. Driven by a strong interest in data science and AI, I specialize in turning raw data into ' +
+    'actionable insights, predictive models and dashboards that support business decisions.',
   highlights: [
-    { value: 'BNP Paribas CIB', label: 'Data Analyst apprentice' },
-    { value: 'ESIEE Paris', label: 'Data & Applications engineering degree' },
-    { value: 'Top of my class', label: 'Scientific Baccalaureate, with honours' },
+    { value: 'BNP Paribas CIB', label: 'Data Analyst Apprentice' },
+    { value: 'ESIEE Paris', label: "Master's in Engineering, Data & Applications" },
+    { value: 'Ranked 1st in class', label: 'French Scientific Baccalaureate, with honors' },
   ],
 
   experiences: [
@@ -166,49 +166,50 @@ const en: typeof fr = {
       title: 'Data Analyst – Listed Derivatives Execution',
       company: 'BNP Paribas CIB',
       logo: 'logos/bnp-paribas.svg',
-      subtitle: 'Apprenticeship · DEC Execution IT Business Analyst',
-      period: '01/2025 – present',
+      subtitle: 'Apprenticeship · DEC Execution IT Business Analysis',
+      period: 'Jan 2025 – Present',
       location: 'Montreuil, France',
-      introTitle: 'About the team',
+      introTitle: 'Team overview',
       intro:
-        'Within the DEC Execution IT Business Analyst teams, I help monitor and improve electronic execution systems ' +
-        'and processes on listed derivatives markets, working closely with business, Operations and IT teams.',
+        'As part of the DEC Execution IT Business Analysis team, I support the monitoring and continuous improvement of ' +
+        'electronic execution systems and processes for listed derivatives, working in close partnership with ' +
+        'Front Office, Operations and IT stakeholders.',
       missions: [
         {
-          title: 'Mission 1 — FIX Allocation Analytics & Power BI Reporting',
+          title: 'Project 1 — FIX Allocation Analytics & Power BI Reporting',
           points: [
-            'Enhanced an existing Power BI dashboard used to monitor FIX and FILE Allocation flows.',
-            'Extracted and analysed data from an Oracle database using SQL queries.',
-            'Built a centralised SQL view to feed the dashboard and standardise how the data is used.',
-            'Developed and improved KPIs tracking allocation volumes, FIX messages, rejections and Processing Times.',
-            'Analysed flows across several dimensions: client, market, Allocation Method, status and period.',
-            'Improved visibility on anomalies, activity trends and processing delays to make operational monitoring easier.',
+            'Enhanced an existing Power BI dashboard used to monitor FIX and file-based allocation flows.',
+            'Extracted and analyzed data from an Oracle database using SQL.',
+            'Designed a centralized SQL view to feed the dashboard and standardize data consumption across reports.',
+            'Developed and refined KPIs tracking allocation volumes, FIX message activity, rejections and processing times.',
+            'Analyzed flows across multiple dimensions, including client, market, allocation method, status and time period.',
+            'Increased visibility into anomalies, activity trends and processing delays, streamlining day-to-day operational monitoring.',
           ],
         },
         {
-          title: 'Mission 2 — Algorithmic Trading & Execution Quality',
+          title: 'Project 2 — Algorithmic Trading & Execution Quality',
           points: [
-            'Deepened my understanding of order execution mechanisms on Listed Derivatives markets.',
-            'Studied Execution Quality KPIs, benchmarks, Transaction Costs and the gap between execution and reference prices, expressed in basis points (bps).',
-            'Analysed the factors that can affect execution quality: algorithm used, market, order size and execution conditions.',
-            "Contributed to monitoring Algorithmic Trading activity through the team's tools and dashboards.",
-            'Built knowledge of the FIX Protocol, connectivity between Trading Systems, algorithm integration and Functional Tests.',
+            'Built in-depth knowledge of order execution mechanics on listed derivatives markets.',
+            'Studied execution quality KPIs, benchmarks and transaction costs, including slippage between execution and reference prices measured in basis points (bps).',
+            'Analyzed the key drivers of execution quality: choice of algorithm, venue, order size and market conditions.',
+            "Contributed to monitoring algorithmic trading activity using the team's tools and dashboards.",
+            'Developed working knowledge of the FIX Protocol, trading system connectivity, algorithm integration and functional testing.',
           ],
         },
       ],
       tools: bnpTools,
     },
     {
-      title: 'Sales assistant',
-      company: 'Family restaurant',
+      title: 'Sales Associate',
+      company: 'Family-owned restaurant',
       logo: '',
-      subtitle: 'Job',
-      period: '06/2019 – 08/2022',
+      subtitle: 'Part-time position',
+      period: 'Jun 2019 – Aug 2022',
       location: 'Abidjan, Côte d’Ivoire',
       introTitle: '',
       intro:
-        'Actively involved in running the family restaurant: welcoming and serving customers with a focus on their ' +
-        'satisfaction, taking orders and coordinating service to keep everything running smoothly.',
+        'Played an active role in the day-to-day running of the family restaurant: welcomed and served customers with a ' +
+        'strong focus on satisfaction, took orders and helped coordinate service to ensure smooth operations.',
       missions: [],
       tools: [],
     },
@@ -216,65 +217,67 @@ const en: typeof fr = {
 
   education: [
     {
-      title: 'Engineering degree — Data & Applications (apprenticeship)',
+      title: "Master's-level Engineering Degree — Data & Applications (work-study program)",
       school: 'ESIEE Paris — Gustave Eiffel University',
-      period: '09/2024 – present',
+      period: 'Sep 2024 – Present',
       details:
-        'Statistics, optimisation, relational databases, machine learning, deep learning, cybersecurity, ' +
-        'project management, data mining with R, Python for data science, algorithms and graphs.',
+        'Relevant coursework: statistics, optimization, relational databases, machine learning, deep learning, ' +
+        'cybersecurity, project management, data mining with R, Python for data science, algorithms and graph theory.',
     },
     {
-      title: 'Preparatory classes for engineering schools (MPSI – MP*)',
+      title: 'Classes Préparatoires (MPSI – MP*), intensive undergraduate program in mathematics and physics',
       school: 'ESTEM Casablanca, Morocco',
-      period: '09/2022 – 06/2024',
-      details: 'Mathematics, Python, SQL, probability. Admitted to an engineering school.',
+      period: 'Sep 2022 – Jun 2024',
+      details:
+        'Two-year program preparing for the competitive entrance exams to French engineering schools. ' +
+        'Mathematics, Python, SQL and probability.',
     },
     {
-      title: 'Scientific Baccalaureate — with honours, top of my class',
+      title: 'French Scientific Baccalaureate — with honors, ranked 1st in class',
       school: 'Lycée Moderne Port-Bouët, Abidjan',
-      period: '09/2019 – 07/2022',
+      period: 'Sep 2019 – Jul 2022',
       details: '',
     },
   ],
 
   associations: [
     {
-      name: 'Polymie Club — ESIEE Paris',
+      name: 'Polymie Debate Club — ESIEE Paris',
       role: 'Member',
-      description: 'Debate sessions to strengthen my public speaking and argumentation skills.',
+      description: 'Regular debate sessions to sharpen my public speaking and persuasive communication skills.',
     },
     {
-      name: 'Miss Mathematics 2022',
-      role: 'Participant',
-      description: 'Regional mathematics competition in Port-Bouët (Côte d’Ivoire).',
+      name: 'Miss Mathématique 2022',
+      role: 'Contestant',
+      description: 'Regional mathematics competition held in Port-Bouët, Côte d’Ivoire.',
     },
     {
-      name: 'Python training (non-profit)',
+      name: 'Python Programming Workshop (non-profit)',
       role: 'Participant',
-      description: 'Introduction to computer tools and Python programming.',
+      description: 'Introductory training in core computing tools and Python programming.',
     },
   ],
 
   certifications: [
-    { name: 'Foundations of AI', issuer: 'Madjid Khichane, PhD in AI — LinkedIn Learning' },
+    { name: 'Foundations of Artificial Intelligence', issuer: 'Madjid Khichane, PhD in AI — LinkedIn Learning' },
     { name: 'Power BI Essential Training', issuer: 'André Meyer-Roussilhon — LinkedIn Learning' },
-    { name: 'Excel Dashboards', issuer: 'Martial Auroy — LinkedIn Learning' },
-    { name: 'Pandas for data science', issuer: 'LinkedIn Learning' },
+    { name: 'Building Dashboards in Excel', issuer: 'Martial Auroy — LinkedIn Learning' },
+    { name: 'Pandas for Data Science', issuer: 'LinkedIn Learning' },
   ],
 
   skills: [
-    { group: 'Languages', items: ['Python', 'SQL', 'C', 'R'] },
+    { group: 'Programming', items: ['Python', 'SQL', 'C', 'R'] },
     { group: 'Data & BI', items: ['Power BI', 'Power Query', 'DAX', 'Excel / VBA', 'SAS', 'Dataiku', 'Salesforce'] },
-    { group: 'Data science & AI', items: ['Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'] },
+    { group: 'Data Science & AI', items: ['Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'] },
     { group: 'Tools', items: ['Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'SQLite', 'PowerPoint', 'Canva'] },
     {
       group: 'Soft skills',
-      items: ['Rigour', 'Autonomy', 'Team spirit', 'Curiosity', 'Listening', 'Adaptability', 'Analysis & synthesis', 'Organisation'],
+      items: ['Attention to detail', 'Self-motivated', 'Team player', 'Intellectual curiosity', 'Active listening', 'Adaptability', 'Analytical thinking', 'Organizational skills'],
     },
   ],
 
-  languages: ['French (native)', 'English (B2)'],
-  interests: ['Cooking', 'Drawing', 'Learning'],
+  languages: ['French (native)', 'English (upper intermediate, B2)'],
+  interests: ['Cooking', 'Drawing', 'Continuous learning'],
 };
 
 export const content = { fr, en };
