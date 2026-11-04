@@ -14,13 +14,12 @@ export const profile = {
   },
 };
 
-// Preuves des certifications : remplace par le lien direct de chaque certificat (ou un PDF mis dans public/).
-// Par défaut, toutes pointent vers la section Certifications du profil LinkedIn.
+// Liens de vérification des certificats LinkedIn Learning
 const certProof = {
-  ai: `${profile.contact.linkedin}/details/certifications/`,
-  powerBi: `${profile.contact.linkedin}/details/certifications/`,
-  excel: `${profile.contact.linkedin}/details/certifications/`,
-  pandas: `${profile.contact.linkedin}/details/certifications/`,
+  ai: 'https://www.linkedin.com/learning/certificates/91edaa74a2ea45983f6b57f47dd0165b29bbb43761d2ca4f464d2da05f8df677',
+  aiBanking: 'https://www.linkedin.com/learning/certificates/2d87a2bb0b9b53d5badc7656e8ea8ee9068e4a2fcc20dfe86ba270c234b85db4',
+  powerBi: 'https://www.linkedin.com/learning/certificates/eb533e290ef611040f3a1b62259f5aee1b9710447a23772e2cef01373414de6c',
+  excel: 'https://www.linkedin.com/learning/certificates/de2e0d48888da26a4f03168084c723fbe442a6ea855f4a55c4e198f0bef259e3',
 };
 
 const bnpTools = ['Power BI', 'SQL', 'Oracle', 'FIX Protocol', 'Execution Quality / TCA', 'Algorithmic Trading'];
@@ -148,6 +147,12 @@ const fr = {
       proof: certProof.ai,
     },
     {
+      name: "L'intelligence artificielle dans la banque et l'assurance",
+      description: "Cas d'usage de l'IA dans les services financiers : risque, fraude, relation client et conformité.",
+      image: 'certifications/ai-banking.svg',
+      proof: certProof.aiBanking,
+    },
+    {
       name: "L'essentiel de Power BI",
       description: 'Modélisation des données, Power Query, DAX et conception de rapports interactifs.',
       image: 'certifications/power-bi.svg',
@@ -158,12 +163,6 @@ const fr = {
       description: 'Indicateurs, tableaux croisés dynamiques et graphiques pour le suivi de l’activité.',
       image: 'certifications/excel-dashboard.svg',
       proof: certProof.excel,
-    },
-    {
-      name: 'Pandas pour la data science',
-      description: 'Manipulation, nettoyage et analyse de données tabulaires en Python.',
-      image: 'certifications/pandas.svg',
-      proof: certProof.pandas,
     },
   ],
 
@@ -306,6 +305,12 @@ const en: typeof fr = {
       proof: certProof.ai,
     },
     {
+      name: 'AI in Banking and Insurance',
+      description: 'AI use cases in financial services, including risk management, fraud detection, customer experience and compliance.',
+      image: 'certifications/ai-banking.svg',
+      proof: certProof.aiBanking,
+    },
+    {
       name: 'Power BI Essential Training',
       description: 'Data modeling, Power Query, DAX and interactive report design.',
       image: 'certifications/power-bi.svg',
@@ -316,12 +321,6 @@ const en: typeof fr = {
       description: 'KPIs, pivot tables and charts for business performance tracking.',
       image: 'certifications/excel-dashboard.svg',
       proof: certProof.excel,
-    },
-    {
-      name: 'Pandas for Data Science',
-      description: 'Manipulating, cleaning and analyzing tabular data in Python.',
-      image: 'certifications/pandas.svg',
-      proof: certProof.pandas,
     },
   ],
 
