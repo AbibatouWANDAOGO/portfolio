@@ -104,6 +104,61 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
     </div>
   </section>
 
+  <!-- Compétences -->
+  <section class="section" id="competences">
+    <div class="container">
+      <p class="eyebrow">{t.skills.eyebrow}</p>
+      <h2 class="section-title">{t.skills.title}</h2>
+      <div class="grid skills">
+        {
+          skills.map((s) => (
+            <div class="card skill">
+              <h3>{s.group}</h3>
+              <ul class="tags">{s.items.map((i) => <li class="tag">{i}</li>)}</ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Projets par domaine -->
+  <section class="section" id="projets">
+    <div class="container">
+      <p class="eyebrow">{t.projects.eyebrow}</p>
+      <h2 class="section-title">{t.projects.title}</h2>
+      <p class="lead">{t.projects.lead}</p>
+
+      <div class="grid domains">
+        {
+          domains.map((d) => {
+            const n = countByDomain(d.slug);
+            return (
+              <a href={domainPath(lang, d.slug)} class="card domain-card">
+                <h3>{domainName(d.slug, lang)}</h3>
+                <p>{d.tagline[lang]}</p>
+                <span class:list={['badge', { 'badge-warn': n === 0 }]}>
+                  {n === 0 ? t.projects.soon : t.projects.count(n)}
+                </span>
+              </a>
+            );
+          })
+        }
+      </div>
+
+      {
+        featured.length > 0 && (
+          <>
+            <h3 class="featured-title">{t.projects.featured}</h3>
+            <div class="grid">
+              {featured.map((p) => <ProjectCard project={p} lang={lang} />)}
+            </div>
+          </>
+        )
+      }
+    </div>
+  </section>
+
   <!-- Formation -->
   <section class="section" id="formation">
     <div class="container">
@@ -151,62 +206,6 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
 
       <h3 class="block-title">{t.interests}</h3>
       <ul class="tags">{interests.map((i) => <li class="tag">{i}</li>)}</ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projets par domaine -->
-  <section class="section" id="projets">
-    <div class="container">
-      <p class="eyebrow">{t.projects.eyebrow}</p>
-      <h2 class="section-title">{t.projects.title}</h2>
-      <p class="lead">{t.projects.lead}</p>
-
-      <div class="grid domains">
-        {
-          domains.map((d) => {
-            const n = countByDomain(d.slug);
-            return (
-              <a href={domainPath(lang, d.slug)} class="card domain-card">
-                <h3>{domainName(d.slug, lang)}</h3>
-                <p>{d.tagline[lang]}</p>
-                <span class:list={['badge', { 'badge-warn': n === 0 }]}>
-                  {n === 0 ? t.projects.soon : t.projects.count(n)}
-                </span>
-              </a>
-            );
-          })
-        }
-      </div>
-
-      {
-        featured.length > 0 && (
-          <>
-            <h3 class="featured-title">{t.projects.featured}</h3>
-            <div class="grid">
-              {featured.map((p) => <ProjectCard project={p} lang={lang} />)}
-            </div>
-          </>
-        )
-      }
-    </div>
-  </section>
-
-  <!-- Compétences -->
-  <section class="section" id="competences">
-    <div class="container">
-      <p class="eyebrow">{t.skills.eyebrow}</p>
-      <h2 class="section-title">{t.skills.title}</h2>
-      <div class="grid skills">
-        {
-          skills.map((s) => (
-            <div class="card skill">
-              <h3>{s.group}</h3>
-              <ul class="tags">{s.items.map((i) => <li class="tag">{i}</li>)}</ul>
-            </div>
-          ))
-        }
-      </div>
     </div>
   </section>
 
