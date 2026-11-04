@@ -244,8 +244,18 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
 </Base>
 
 <style>
+  .hero .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hero .lead {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
   .hero .lead + .lead {
-    margin-top: 0.9rem;
+    margin-top: 0.75rem;
   }
 
   .hero-inner {
@@ -256,7 +266,7 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
   }
 
   h1 {
-    font-size: clamp(2.3rem, 6vw, 3.8rem);
+    font-size: clamp(2rem, 5vw, 3.1rem);
     margin-bottom: 1.25rem;
   }
 
