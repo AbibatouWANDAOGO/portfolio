@@ -21,7 +21,7 @@ const fr = {
   role: 'Apprentie Listed Derivatives Analyst · BNP Paribas CIB × ESIEE Paris',
   // Un paragraphe par élément de la liste
   intro: [
-    "Étudiante ingénieure en Data & Applications à l'ESIEE Paris et Data Analyst en apprentissage chez BNP Paribas CIB.",
+    "Étudiante ingénieure en Data & Applications à l'ESIEE Paris et Listed Derivatives Analyst en apprentissage chez BNP Paribas CIB.",
     "J'aime comprendre, explorer et donner du sens aux données. Ce qui m'intéresse particulièrement, c'est de passer " +
       "d'une donnée brute à une information exploitable, d'une problématique à une solution, et d'une analyse à une " +
       'véritable aide à la décision.',
@@ -38,7 +38,7 @@ const fr = {
   // logo : fichier dans public/ (laisse '' pour afficher les initiales de l'entreprise)
   experiences: [
     {
-      title: 'Data Analyst – Listed Derivatives Execution',
+      title: 'Listed Derivatives Analyst – Execution',
       company: 'BNP Paribas CIB',
       logo: 'logos/bnp-paribas.svg',
       subtitle: 'Alternance · DEC Execution IT Business Analyst',
@@ -157,7 +157,7 @@ const fr = {
 const en: typeof fr = {
   role: 'Listed Derivatives Analyst Apprentice · BNP Paribas CIB × ESIEE Paris',
   intro: [
-    'Engineering student in Data & Applications at ESIEE Paris and Data Analyst apprentice at BNP Paribas CIB.',
+    'Engineering student in Data & Applications at ESIEE Paris and Listed Derivatives Analyst apprentice at BNP Paribas CIB.',
     'I enjoy understanding, exploring and making sense of data. What drives me most is turning raw data into ' +
       'actionable insight, a problem into a solution, and an analysis into genuine decision support.',
     'Working at the intersection of data analytics, artificial intelligence and technological innovation, I am steadily ' +
@@ -171,7 +171,7 @@ const en: typeof fr = {
 
   experiences: [
     {
-      title: 'Data Analyst – Listed Derivatives Execution',
+      title: 'Listed Derivatives Analyst – Execution',
       company: 'BNP Paribas CIB',
       logo: 'logos/bnp-paribas.svg',
       subtitle: 'Apprenticeship · DEC Execution IT Business Analysis',
