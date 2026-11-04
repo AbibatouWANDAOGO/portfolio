@@ -18,14 +18,19 @@ const bnpTools = ['Power BI', 'SQL', 'Oracle', 'FIX Protocol', 'Execution Qualit
 
 // ───────────────────────────── FRANÇAIS ─────────────────────────────
 const fr = {
-  role: 'Ingénieure apprentie Data · BNP Paribas CIB × ESIEE Paris',
-  intro:
-    "Passionnée par la data science et l'innovation en IA, je suis Data Analyst en apprentissage chez BNP Paribas CIB " +
-    "tout en suivant le cycle ingénieur Data & Applications à l'ESIEE Paris. J'aime partir de données brutes pour " +
-    'en tirer des analyses, des modèles et des tableaux de bord qui aident à décider.',
+  role: 'Apprentie Listed Derivatives Analyst · BNP Paribas CIB × ESIEE Paris',
+  // Un paragraphe par élément de la liste
+  intro: [
+    "Étudiante ingénieure en Data & Applications à l'ESIEE Paris et Data Analyst en apprentissage chez BNP Paribas CIB.",
+    "J'aime comprendre, explorer et donner du sens aux données. Ce qui m'intéresse particulièrement, c'est de passer " +
+      "d'une donnée brute à une information exploitable, d'une problématique à une solution, et d'une analyse à une " +
+      'véritable aide à la décision.',
+    'Entre data analytics, intelligence artificielle et innovation technologique, je construis progressivement mon ' +
+      "expertise avec une conviction : la donnée prend toute sa valeur lorsqu'elle permet d'agir.",
+  ],
   // Chiffres / faits clés affichés sous la présentation
   highlights: [
-    { value: 'BNP Paribas CIB', label: 'Data Analyst en apprentissage' },
+    { value: 'BNP Paribas CIB', label: 'Listed Derivatives Analyst en apprentissage' },
     { value: 'ESIEE Paris', label: 'Cycle ingénieur Data & Applications' },
     { value: 'Major de promo', label: 'Bac S, mention Bien' },
   ],
@@ -150,13 +155,16 @@ const fr = {
 
 // ───────────────────────────── ENGLISH ─────────────────────────────
 const en: typeof fr = {
-  role: 'Data Engineering Apprentice · BNP Paribas CIB × ESIEE Paris',
-  intro:
-    "I'm a Data Analyst apprentice at BNP Paribas CIB, pursuing a Master's-level engineering degree in Data & Applications " +
-    'at ESIEE Paris. Driven by a strong interest in data science and AI, I specialize in turning raw data into ' +
-    'actionable insights, predictive models and dashboards that support business decisions.',
+  role: 'Listed Derivatives Analyst Apprentice · BNP Paribas CIB × ESIEE Paris',
+  intro: [
+    'Engineering student in Data & Applications at ESIEE Paris and Data Analyst apprentice at BNP Paribas CIB.',
+    'I enjoy understanding, exploring and making sense of data. What drives me most is turning raw data into ' +
+      'actionable insight, a problem into a solution, and an analysis into genuine decision support.',
+    'Working at the intersection of data analytics, artificial intelligence and technological innovation, I am steadily ' +
+      'building my expertise around one core belief: data delivers its full value when it drives action.',
+  ],
   highlights: [
-    { value: 'BNP Paribas CIB', label: 'Data Analyst Apprentice' },
+    { value: 'BNP Paribas CIB', label: 'Listed Derivatives Analyst Apprentice' },
     { value: 'ESIEE Paris', label: "Master's in Engineering, Data & Applications" },
     { value: 'Ranked 1st in class', label: 'French Scientific Baccalaureate, with honors' },
   ],

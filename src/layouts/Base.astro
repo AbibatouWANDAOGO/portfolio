@@ -11,7 +11,7 @@ interface Props {
   description?: string;
 }
 
-const { lang, alternates, title, description = content[lang].intro } = Astro.props;
+const { lang, alternates, title, description = content[lang].intro.join(" ") } = Astro.props;
 const t = ui[lang];
 const fullName = `${profile.firstName} ${profile.lastName}`;
 const pageTitle = title ? `${title} · ${fullName}` : `${fullName} — Portfolio`;
