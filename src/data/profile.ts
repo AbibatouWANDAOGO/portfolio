@@ -178,10 +178,9 @@ const fr = {
     },
   ],
 
-  // level : niveau CECRL de 1 (A1) à 6 (C2), sert à remplir la jauge
   languages: [
-    { name: 'Anglais', cefr: 'B2 avancé', level: 4, detail: 'Écrit et oral professionnels' },
-    { name: 'Français', cefr: 'C1', level: 5, detail: 'Écrit et oral' },
+    { name: 'Anglais', level: 'B2 avancé', detail: 'Oral et écrit, en contexte professionnel' },
+    { name: 'Français', level: 'C1', detail: 'Oral et écrit' },
   ],
   interests: ['Cuisine', 'Dessin', 'Apprendre'],
 };
@@ -338,8 +337,8 @@ const en: typeof fr = {
   ],
 
   languages: [
-    { name: 'English', cefr: 'Advanced B2', level: 4, detail: 'Professional working proficiency, written and spoken' },
-    { name: 'French', cefr: 'C1', level: 5, detail: 'Advanced proficiency, written and spoken' },
+    { name: 'English', level: 'Advanced B2', detail: 'Spoken and written, professional working proficiency' },
+    { name: 'French', level: 'C1', detail: 'Spoken and written' },
   ],
   interests: ['Cooking', 'Drawing', 'Continuous learning'],
 };

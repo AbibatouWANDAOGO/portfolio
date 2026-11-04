@@ -122,7 +122,7 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
         }
       </ol>
 
-      <h3 class="block-title">{t.certifications}</h3>
+      <h2 class="section-title block-head">{t.certifications}</h2>
       <ul class="cert-grid">
         {
           certifications.map((c) => (
@@ -136,32 +136,21 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
         }
       </ul>
 
-      <div class="extras">
-        <div>
-          <h3 class="block-title">{t.languagesTitle}</h3>
-          <ul class="lang-grid">
-            {
-              languages.map((l) => (
-                <li class="card lang">
-                  <div class="lang-head">
-                    <h4>{l.name}</h4>
-                    <span class="badge">{l.cefr}</span>
-                  </div>
-                  <div class="cefr" aria-hidden="true">
-                    {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((step, i) => (
-                      <span class:list={['cefr-step', { on: i < l.level }]}>{step}</span>
-                    ))}
-                  </div>
-                  <p>{l.detail}</p>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <div>
-          <h3 class="block-title">{t.interests}</h3>
-          <ul class="tags">{interests.map((i) => <li class="tag">{i}</li>)}</ul>
-        </div>
+      <h2 class="section-title block-head">{t.languagesTitle}</h2>
+      <ul class="lang-grid">
+        {
+          languages.map((l) => (
+            <li class="card lang">
+              <h4>{l.name}</h4>
+              <p class="lang-level">{l.level}</p>
+              <p>{l.detail}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h3 class="block-title">{t.interests}</h3>
+      <ul class="tags">{interests.map((i) => <li class="tag">{i}</li>)}</ul>
       </div>
     </div>
   </section>
@@ -489,20 +478,14 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
     font-weight: 500;
   }
 
-  .extras {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    gap: 2rem;
-    margin-top: 2.5rem;
+  .block-head {
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
   }
 
   .block-title {
     font-size: 1.1rem;
     margin: 2.5rem 0 1rem;
-  }
-
-  .extras .block-title {
-    margin-top: 0;
   }
 
   .cert-grid,
@@ -512,6 +495,10 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
     padding: 0;
     display: grid;
     gap: 1rem;
+  }
+
+  .lang-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
   }
 
   .cert-grid {
@@ -558,36 +545,15 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
   .lang {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
-    padding: 1.1rem 1.25rem;
+    gap: 0.35rem;
+    padding: 1.25rem;
   }
 
-  .lang-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  .cefr {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 4px;
-  }
-
-  .cefr-step {
-    text-align: center;
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 0.2rem 0;
-    border-radius: 6px;
-    background: var(--surface-2);
-    color: var(--muted);
-  }
-
-  .cefr-step.on {
-    background: var(--accent);
-    color: var(--accent-ink);
+  .lang .lang-level {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
   }
 
   .domains {
