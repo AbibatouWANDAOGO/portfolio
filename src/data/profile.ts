@@ -29,7 +29,7 @@ const fr = {
   role: 'Apprentie Listed Derivatives Analyst · BNP Paribas CIB × ESIEE Paris',
   // Un paragraphe par élément de la liste
   intro: [
-    "Étudiante ingénieure en Data & Applications à l'ESIEE Paris et Listed Derivatives Analyst en apprentissage chez BNP Paribas CIB.",
+    "Étudiante ingénieure en Data Science & Intelligence Artificielle à l'ESIEE Paris et Listed Derivatives Analyst en apprentissage chez BNP Paribas CIB.",
     "J'aime comprendre, explorer et donner du sens aux données. Ce qui m'intéresse particulièrement, c'est de passer " +
       "d'une donnée brute à une information exploitable, d'une problématique à une solution, et d'une analyse à une " +
       'véritable aide à la décision.',
@@ -39,7 +39,7 @@ const fr = {
   // Chiffres / faits clés affichés sous la présentation
   highlights: [
     { value: 'BNP Paribas CIB', label: 'Listed Derivatives Analyst en apprentissage' },
-    { value: 'ESIEE Paris', label: 'Cycle ingénieur Data & Applications' },
+    { value: 'ESIEE Paris', label: 'Cycle ingénieur Data Science & IA' },
     { value: 'Major de promo', label: 'Bac S, mention Bien' },
   ],
 
@@ -86,7 +86,7 @@ const fr = {
 
   education: [
     {
-      title: 'Cycle ingénieur — Data & Applications (en apprentissage)',
+      title: 'Cycle ingénieur — Data Science & Intelligence Artificielle (en apprentissage)',
       school: 'ESIEE Paris — Université Gustave Eiffel',
       logo: 'logos/esiee-paris.svg',
       period: '09/2024 – aujourd’hui',
@@ -184,7 +184,7 @@ const fr = {
 const en: typeof fr = {
   role: 'Listed Derivatives Analyst Apprentice · BNP Paribas CIB × ESIEE Paris',
   intro: [
-    'Engineering student in Data & Applications at ESIEE Paris and Listed Derivatives Analyst apprentice at BNP Paribas CIB.',
+    'Engineering student in Data Science & Artificial Intelligence at ESIEE Paris and Listed Derivatives Analyst apprentice at BNP Paribas CIB.',
     'I enjoy understanding, exploring and making sense of data. What drives me most is turning raw data into ' +
       'actionable insight, a problem into a solution, and an analysis into genuine decision support.',
     'Working at the intersection of data analytics, artificial intelligence and technological innovation, I am steadily ' +
@@ -192,7 +192,7 @@ const en: typeof fr = {
   ],
   highlights: [
     { value: 'BNP Paribas CIB', label: 'Listed Derivatives Analyst Apprentice' },
-    { value: 'ESIEE Paris', label: "Master's in Engineering, Data & Applications" },
+    { value: 'ESIEE Paris', label: "Master's in Engineering, Data Science & AI" },
     { value: 'Ranked 1st in class', label: 'French Scientific Baccalaureate, with honors' },
   ],
 
@@ -238,7 +238,7 @@ const en: typeof fr = {
 
   education: [
     {
-      title: "Master's-level Engineering Degree — Data & Applications (work-study program)",
+      title: "Master's-level Engineering Degree — Data Science & Artificial Intelligence (work-study program)",
       school: 'ESIEE Paris — Gustave Eiffel University',
       logo: 'logos/esiee-paris.svg',
       period: 'Sep 2024 – Present',
