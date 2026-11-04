@@ -168,12 +168,19 @@ const fr = {
 
   skills: [
     { group: 'Langages', items: ['Python', 'SQL', 'C', 'R'] },
-    { group: 'Data & BI', items: ['Power BI', 'Power Query', 'DAX', 'Excel / VBA', 'SAS', 'Dataiku', 'Salesforce'] },
-    { group: 'Data science & IA', items: ['Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'] },
-    { group: 'Outils', items: ['Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'SQLite', 'PowerPoint', 'Canva'] },
+    {
+      group: 'Data & BI',
+      items: ['Power BI', 'Power Query', 'DAX', 'Data visualisation', 'Tableaux de bord', 'Reporting', 'Excel / VBA', 'SAS', 'Dataiku', 'Salesforce'],
+    },
+    {
+      group: 'Data science & IA',
+      items: ['Intelligence artificielle', 'Machine learning', 'Deep learning', 'Statistiques', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'],
+    },
+    { group: 'Big Data & Cloud', items: ['Big data analytics', 'Spark', 'Databricks', 'Cloud', 'Neo4j'] },
+    { group: 'Bases de données & outils', items: ['Oracle Database', 'SQLite', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
     {
       group: 'Savoir-être',
-      items: ['Rigueur', 'Autonomie', "Esprit d'équipe", 'Curiosité', 'Écoute', 'Adaptabilité', 'Analyse & synthèse', 'Organisation'],
+      items: ['Gestion de projet', 'Rigueur', 'Autonomie', "Esprit d'équipe", 'Curiosité', 'Écoute', 'Adaptabilité', 'Analyse & synthèse', 'Organisation'],
     },
   ],
 
@@ -326,12 +333,19 @@ const en: typeof fr = {
 
   skills: [
     { group: 'Programming', items: ['Python', 'SQL', 'C', 'R'] },
-    { group: 'Data & BI', items: ['Power BI', 'Power Query', 'DAX', 'Excel / VBA', 'SAS', 'Dataiku', 'Salesforce'] },
-    { group: 'Data Science & AI', items: ['Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'] },
-    { group: 'Tools', items: ['Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'SQLite', 'PowerPoint', 'Canva'] },
+    {
+      group: 'Data & BI',
+      items: ['Power BI', 'Power Query', 'DAX', 'Data visualization', 'Dashboards', 'Reporting', 'Excel / VBA', 'SAS', 'Dataiku', 'Salesforce'],
+    },
+    {
+      group: 'Data Science & AI',
+      items: ['Artificial intelligence', 'Machine learning', 'Deep learning', 'Statistics', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'],
+    },
+    { group: 'Big Data & Cloud', items: ['Big data analytics', 'Spark', 'Databricks', 'Cloud', 'Neo4j'] },
+    { group: 'Databases & Tools', items: ['Oracle Database', 'SQLite', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
     {
       group: 'Soft skills',
-      items: ['Attention to detail', 'Self-motivated', 'Team player', 'Intellectual curiosity', 'Active listening', 'Adaptability', 'Analytical thinking', 'Organizational skills'],
+      items: ['Project management', 'Attention to detail', 'Self-motivated', 'Team player', 'Intellectual curiosity', 'Active listening', 'Adaptability', 'Analytical thinking', 'Organizational skills'],
     },
   ],
 
