@@ -82,20 +82,6 @@ const fr = {
       ],
       tools: bnpTools,
     },
-    {
-      title: 'Vendeuse',
-      company: 'Restaurant familial',
-      logo: '',
-      subtitle: 'Emploi',
-      period: '06/2019 – 08/2022',
-      location: 'Abidjan, Côte d’Ivoire',
-      introTitle: '',
-      intro:
-        'Participation active à la gestion du restaurant familial : accueil et service des clients avec le souci de ' +
-        'leur satisfaction, aide à la prise de commandes et coordination du service pour un fonctionnement fluide.',
-      missions: [],
-      tools: [],
-    },
   ],
 
   education: [
@@ -247,20 +233,6 @@ const en: typeof fr = {
         },
       ],
       tools: bnpTools,
-    },
-    {
-      title: 'Sales Associate',
-      company: 'Family-owned restaurant',
-      logo: '',
-      subtitle: 'Part-time position',
-      period: 'Jun 2019 – Aug 2022',
-      location: 'Abidjan, Côte d’Ivoire',
-      introTitle: '',
-      intro:
-        'Played an active role in the day-to-day running of the family restaurant: welcomed and served customers with a ' +
-        'strong focus on satisfaction, took orders and helped coordinate service to ensure smooth operations.',
-      missions: [],
-      tools: [],
     },
   ],
 
