@@ -36,20 +36,20 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
           <a href="#contact" class="btn btn-ghost">{t.contactMe}</a>
           {profile.cv && <a href={url(profile.cv)} class="btn btn-ghost" target="_blank">{t.myCv}</a>}
         </div>
-        <ul class="highlights">
-          {
-            highlights.map((h) => (
-              <li>
-                <strong>{h.value}</strong>
-                <span>{h.label}</span>
-              </li>
-            ))
-          }
-        </ul>
       </div>
       <div class="avatar" aria-hidden={!profile.photo}>
         {profile.photo ? <img src={url(profile.photo)} alt={`${t.photoOf} ${profile.firstName}`} /> : <span>{initials}</span>}
       </div>
+      <ul class="highlights">
+        {
+          highlights.map((h) => (
+            <li>
+              <strong>{h.value}</strong>
+              <span>{h.label}</span>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -282,12 +282,13 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
   }
 
   .highlights {
+    grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem 2.5rem;
+    gap: 1.5rem 3.5rem;
     list-style: none;
     padding: 1.5rem 0 0;
-    margin: 2.5rem 0 0;
+    margin: 0;
     border-top: 1px solid var(--line);
   }
 
@@ -420,6 +421,7 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
   }
 
   .avatar {
+    justify-self: center;
     width: clamp(160px, 26vw, 260px);
     aspect-ratio: 1;
     border-radius: 50%;
