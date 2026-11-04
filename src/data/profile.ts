@@ -102,6 +102,7 @@ const fr = {
     {
       title: 'Cycle ingénieur — Data & Applications (en apprentissage)',
       school: 'ESIEE Paris — Université Gustave Eiffel',
+      logo: 'logos/esiee-paris.svg',
       period: '09/2024 – aujourd’hui',
       details:
         'Statistiques, optimisation, bases de données relationnelles, machine learning, deep learning, cybersécurité, ' +
@@ -110,12 +111,14 @@ const fr = {
     {
       title: 'Classe préparatoire MPSI – MP*',
       school: 'ESTEM Casablanca, Maroc',
+      logo: 'logos/estem.png',
       period: '09/2022 – 06/2024',
       details: "Mathématiques, Python, SQL, probabilités. Admission en école d'ingénieur.",
     },
     {
       title: 'Baccalauréat scientifique — mention Bien, major de promotion',
       school: 'Lycée Moderne Port-Bouët, Abidjan',
+      logo: '',
       period: '09/2019 – 07/2022',
       details: '',
     },
@@ -265,6 +268,7 @@ const en: typeof fr = {
     {
       title: "Master's-level Engineering Degree — Data & Applications (work-study program)",
       school: 'ESIEE Paris — Gustave Eiffel University',
+      logo: 'logos/esiee-paris.svg',
       period: 'Sep 2024 – Present',
       details:
         'Relevant coursework: statistics, optimization, relational databases, machine learning, deep learning, ' +
@@ -273,6 +277,7 @@ const en: typeof fr = {
     {
       title: 'Classes Préparatoires (MPSI – MP*), intensive undergraduate program in mathematics and physics',
       school: 'ESTEM Casablanca, Morocco',
+      logo: 'logos/estem.png',
       period: 'Sep 2022 – Jun 2024',
       details:
         'Two-year program preparing for the competitive entrance exams to French engineering schools. ' +
@@ -281,6 +286,7 @@ const en: typeof fr = {
     {
       title: 'French Scientific Baccalaureate — with honors, ranked 1st in class',
       school: 'Lycée Moderne Port-Bouët, Abidjan',
+      logo: '',
       period: 'Sep 2019 – Jul 2022',
       details: '',
     },

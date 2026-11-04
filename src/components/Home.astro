@@ -167,11 +167,18 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
       <ol class="timeline">
         {
           education.map((e) => (
-            <li class="card">
-              <span class="period">{e.period}</span>
-              <h3>{e.title}</h3>
-              <p class="school">{e.school}</p>
-              {e.details && <p>{e.details}</p>}
+            <li class="card edu">
+              {e.logo && (
+                <div class="edu-logo">
+                  <img src={url(e.logo)} alt={e.school} />
+                </div>
+              )}
+              <div>
+                <span class="period">{e.period}</span>
+                <h3>{e.title}</h3>
+                <p class="school">{e.school}</p>
+                {e.details && <p>{e.details}</p>}
+              </div>
             </li>
           ))
         }
@@ -482,6 +489,37 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--accent);
+  }
+
+  .edu {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .edu-logo {
+    flex: none;
+    width: 8rem;
+    height: 4rem;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .edu-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  @media (max-width: 560px) {
+    .edu {
+      flex-direction: column;
+      gap: 0.9rem;
+    }
   }
 
   .timeline .school {
