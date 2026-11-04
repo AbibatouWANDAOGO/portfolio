@@ -14,6 +14,15 @@ export const profile = {
   },
 };
 
+// Preuves des certifications : remplace par le lien direct de chaque certificat (ou un PDF mis dans public/).
+// Par défaut, toutes pointent vers la section Certifications du profil LinkedIn.
+const certProof = {
+  ai: `${profile.contact.linkedin}/details/certifications/`,
+  powerBi: `${profile.contact.linkedin}/details/certifications/`,
+  excel: `${profile.contact.linkedin}/details/certifications/`,
+  pandas: `${profile.contact.linkedin}/details/certifications/`,
+};
+
 const bnpTools = ['Power BI', 'SQL', 'Oracle', 'FIX Protocol', 'Execution Quality / TCA', 'Algorithmic Trading'];
 
 // ───────────────────────────── FRANÇAIS ─────────────────────────────
@@ -132,10 +141,30 @@ const fr = {
   ],
 
   certifications: [
-    { name: "Les fondements de l'IA", issuer: 'Madjid Khichane, PhD en IA — LinkedIn Learning' },
-    { name: "L'essentiel de Power BI", issuer: 'André Meyer-Roussilhon — LinkedIn Learning' },
-    { name: 'Tableaux de bord sur Excel', issuer: 'Martial Auroy — LinkedIn Learning' },
-    { name: 'Pandas for data science', issuer: 'LinkedIn Learning' },
+    {
+      name: "Les fondements de l'IA",
+      description: "Concepts clés de l'intelligence artificielle, du machine learning et de leurs usages.",
+      image: 'certifications/ai.svg',
+      proof: certProof.ai,
+    },
+    {
+      name: "L'essentiel de Power BI",
+      description: 'Modélisation des données, Power Query, DAX et conception de rapports interactifs.',
+      image: 'certifications/power-bi.svg',
+      proof: certProof.powerBi,
+    },
+    {
+      name: 'Tableaux de bord sur Excel',
+      description: 'Indicateurs, tableaux croisés dynamiques et graphiques pour le suivi de l’activité.',
+      image: 'certifications/excel-dashboard.svg',
+      proof: certProof.excel,
+    },
+    {
+      name: 'Pandas pour la data science',
+      description: 'Manipulation, nettoyage et analyse de données tabulaires en Python.',
+      image: 'certifications/pandas.svg',
+      proof: certProof.pandas,
+    },
   ],
 
   skills: [
@@ -149,7 +178,11 @@ const fr = {
     },
   ],
 
-  languages: ['Français (natif)', 'Anglais (B2)'],
+  // level : niveau CECRL de 1 (A1) à 6 (C2), sert à remplir la jauge
+  languages: [
+    { name: 'Anglais', cefr: 'B2 avancé', level: 4, detail: 'Écrit et oral professionnels' },
+    { name: 'Français', cefr: 'C1', level: 5, detail: 'Écrit et oral' },
+  ],
   interests: ['Cuisine', 'Dessin', 'Apprendre'],
 };
 
@@ -267,10 +300,30 @@ const en: typeof fr = {
   ],
 
   certifications: [
-    { name: 'Foundations of Artificial Intelligence', issuer: 'Madjid Khichane, PhD in AI — LinkedIn Learning' },
-    { name: 'Power BI Essential Training', issuer: 'André Meyer-Roussilhon — LinkedIn Learning' },
-    { name: 'Building Dashboards in Excel', issuer: 'Martial Auroy — LinkedIn Learning' },
-    { name: 'Pandas for Data Science', issuer: 'LinkedIn Learning' },
+    {
+      name: 'Foundations of Artificial Intelligence',
+      description: 'Core concepts of artificial intelligence and machine learning, and their real-world applications.',
+      image: 'certifications/ai.svg',
+      proof: certProof.ai,
+    },
+    {
+      name: 'Power BI Essential Training',
+      description: 'Data modeling, Power Query, DAX and interactive report design.',
+      image: 'certifications/power-bi.svg',
+      proof: certProof.powerBi,
+    },
+    {
+      name: 'Building Dashboards in Excel',
+      description: 'KPIs, pivot tables and charts for business performance tracking.',
+      image: 'certifications/excel-dashboard.svg',
+      proof: certProof.excel,
+    },
+    {
+      name: 'Pandas for Data Science',
+      description: 'Manipulating, cleaning and analyzing tabular data in Python.',
+      image: 'certifications/pandas.svg',
+      proof: certProof.pandas,
+    },
   ],
 
   skills: [
@@ -284,7 +337,10 @@ const en: typeof fr = {
     },
   ],
 
-  languages: ['French (native)', 'English (upper intermediate, B2)'],
+  languages: [
+    { name: 'English', cefr: 'Advanced B2', level: 4, detail: 'Professional working proficiency, written and spoken' },
+    { name: 'French', cefr: 'C1', level: 5, detail: 'Advanced proficiency, written and spoken' },
+  ],
   interests: ['Cooking', 'Drawing', 'Continuous learning'],
 };
 

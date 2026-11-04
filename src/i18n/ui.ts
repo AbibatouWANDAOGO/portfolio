@@ -33,6 +33,7 @@ export const ui = {
     experience: { eyebrow: 'Parcours professionnel', title: 'Expérience' },
     education: { eyebrow: 'Parcours académique', title: 'Formation' },
     certifications: 'Certifications',
+    certProof: 'Voir la certification ↗',
     languagesTitle: 'Langues',
     interests: "Centres d'intérêt",
     projects: {
@@ -84,6 +85,7 @@ export const ui = {
     experience: { eyebrow: 'Professional experience', title: 'Experience' },
     education: { eyebrow: 'Academic background', title: 'Education' },
     certifications: 'Certifications',
+    certProof: 'View credential ↗',
     languagesTitle: 'Languages',
     interests: 'Interests',
     projects: {

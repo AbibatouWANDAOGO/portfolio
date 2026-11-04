@@ -122,17 +122,44 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
         }
       </ol>
 
+      <h3 class="block-title">{t.certifications}</h3>
+      <ul class="cert-grid">
+        {
+          certifications.map((c) => (
+            <li class="card cert">
+              <img src={url(c.image)} alt="" width="56" height="56" />
+              <h4>{c.name}</h4>
+              <p>{c.description}</p>
+              <a href={c.proof} target="_blank" rel="noopener" class="cert-link">{t.certProof}</a>
+            </li>
+          ))
+        }
+      </ul>
+
       <div class="extras">
         <div>
-          <h3>{t.certifications}</h3>
-          <ul class="plain">
-            {certifications.map((c) => <li><strong>{c.name}</strong> — {c.issuer}</li>)}
+          <h3 class="block-title">{t.languagesTitle}</h3>
+          <ul class="lang-grid">
+            {
+              languages.map((l) => (
+                <li class="card lang">
+                  <div class="lang-head">
+                    <h4>{l.name}</h4>
+                    <span class="badge">{l.cefr}</span>
+                  </div>
+                  <div class="cefr" aria-hidden="true">
+                    {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((step, i) => (
+                      <span class:list={['cefr-step', { on: i < l.level }]}>{step}</span>
+                    ))}
+                  </div>
+                  <p>{l.detail}</p>
+                </li>
+              ))
+            }
           </ul>
         </div>
         <div>
-          <h3>{t.languagesTitle}</h3>
-          <ul class="tags">{languages.map((l) => <li class="tag">{l}</li>)}</ul>
-          <h3 class="mt">{t.interests}</h3>
+          <h3 class="block-title">{t.interests}</h3>
           <ul class="tags">{interests.map((i) => <li class="tag">{i}</li>)}</ul>
         </div>
       </div>
@@ -469,24 +496,98 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
     margin-top: 2.5rem;
   }
 
-  .extras h3 {
+  .block-title {
     font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    margin: 2.5rem 0 1rem;
   }
 
-  .extras .mt {
-    margin-top: 1.5rem;
+  .extras .block-title {
+    margin-top: 0;
   }
 
-  .plain {
+  .cert-grid,
+  .lang-grid {
+    list-style: none;
     margin: 0;
-    padding-left: 1.1rem;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .cert-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  }
+
+  .cert {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.25rem;
+  }
+
+  .cert img {
+    border-radius: 14px;
+  }
+
+  .cert h4,
+  .lang h4 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .cert p,
+  .lang p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .cert-link {
+    margin-top: auto;
+    padding-top: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .cert-link:hover {
+    text-decoration: underline;
+  }
+
+  .lang {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .lang-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .cefr {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+  }
+
+  .cefr-step {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0;
+    border-radius: 6px;
+    background: var(--surface-2);
     color: var(--muted);
   }
 
-  .plain strong {
-    color: var(--ink);
-    font-weight: 600;
+  .cefr-step.on {
+    background: var(--accent);
+    color: var(--accent-ink);
   }
 
   .domains {
