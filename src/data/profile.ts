@@ -163,10 +163,13 @@ const fr = {
     },
     {
       group: 'Data science & IA',
-      items: ['Intelligence artificielle', 'Machine learning', 'Deep learning', 'Statistiques', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'],
+      items: ['Intelligence artificielle', 'Machine learning', 'Deep learning', 'Statistiques', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'Random Forest', 'TensorFlow', 'Keras'],
     },
-    { group: 'Big Data & Cloud', items: ['Big data analytics', 'Spark', 'Databricks', 'Cloud', 'Neo4j'] },
-    { group: 'Bases de données & outils', items: ['Oracle Database', 'SQLite', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
+    {
+      group: 'ML Engineering & Big Data',
+      items: ['FastAPI', 'Pydantic', 'Docker', 'Pytest', 'Big data analytics', 'Spark', 'Databricks', 'Cloud'],
+    },
+    { group: 'Bases de données & outils', items: ['Oracle Database', 'SQLite', 'Neo4j', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
     {
       group: 'Savoir-être',
       items: ['Gestion de projet', 'Rigueur', 'Autonomie', "Esprit d'équipe", 'Curiosité', 'Écoute', 'Adaptabilité', 'Analyse & synthèse', 'Organisation'],
@@ -317,10 +320,13 @@ const en: typeof fr = {
     },
     {
       group: 'Data Science & AI',
-      items: ['Artificial intelligence', 'Machine learning', 'Deep learning', 'Statistics', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'TensorFlow', 'Keras'],
+      items: ['Artificial intelligence', 'Machine learning', 'Deep learning', 'Statistics', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'Random Forest', 'TensorFlow', 'Keras'],
     },
-    { group: 'Big Data & Cloud', items: ['Big data analytics', 'Spark', 'Databricks', 'Cloud', 'Neo4j'] },
-    { group: 'Databases & Tools', items: ['Oracle Database', 'SQLite', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
+    {
+      group: 'ML Engineering & Big Data',
+      items: ['FastAPI', 'Pydantic', 'Docker', 'Pytest', 'Big data analytics', 'Spark', 'Databricks', 'Cloud'],
+    },
+    { group: 'Databases & Tools', items: ['Oracle Database', 'SQLite', 'Neo4j', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
     {
       group: 'Soft skills',
       items: ['Project management', 'Attention to detail', 'Self-motivated', 'Team player', 'Intellectual curiosity', 'Active listening', 'Adaptability', 'Analytical thinking', 'Organizational skills'],
