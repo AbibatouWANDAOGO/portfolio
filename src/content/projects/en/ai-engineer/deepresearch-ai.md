@@ -63,6 +63,21 @@ In total: **283 tests**, which need no network, model or credit, and **5,600 lin
 ![Traceability of a claim](/portfolio/images/deepresearch/dashboard_claim_trace.png)
 *Traceability: a claim, the Fact Checker's justification and the exact passages that support it, with their position (characters 6933 to 7133) in the source text.*
 
+## What each agent does, on one real answer
+
+I followed one real research end to end, from the question to the report: **"Pourquoi les pompes à chaleur sont-elles efficaces ?"** (why are heat pumps efficient?), run in Docker with the local model. It took 16 model calls, 31 minutes and $0. The figures and excerpts below come from what it recorded.
+
+![One answer, agent by agent](/portfolio/images/deepresearch/agents_walkthrough.png)
+*For each step: what the agent receives, what it produced on this question, what the code checks before the next step, and what it cost. Blue: agents that call the model; grey: plain code steps.*
+
+1. **Planner** (1 call, 1 min). It receives the question and turns it into a plan: **3 sub-questions** (technical characteristics, environmental benefits, efficiency factors), **9 search queries** and 4 quality criteria. *Code* caps the number of sub-questions and removes duplicate queries.
+2. **Researcher** (3 calls, 3 min). It receives the web search results of each sub-question and picks the sources to read: **9 sources**, including the négaWatt technical sheet (PDF), Vaillant's page on COP and SCOP, and Greenter's guide to COP factors. *Code* ignores invented sources and URLs already collected.
+3. **Collect and index** (code, no model, 1 min). All 9 pages are downloaded, about 110,000 characters of clean text. They are split into **70 passages** that keep their source, page and position, then indexed twice: as semantic vectors and as keywords. *Code* allows public addresses only and respects robots.txt.
+4. **Analyst** (3 calls, 9 min). It receives the 5 best passages of each sub-question and extracts **18 claims**, each tied to its passages. For example: "Inverter technology can raise real efficiency by 20 to 30 %". It also reports gaps, such as no passage explaining how the SCOP is measured. *Code* rejects references to passages that do not exist.
+5. **Fact Checker** (8 calls, 16 min). For each claim, it receives freshly retrieved passages and gives a verdict: **4 verified, 3 partially, 1 disputed**. The SCOP thresholds, for example, are supported by 3 sources and contradicted by a 4th. 10 claims were not examined for lack of time. *Code* caps the verdict: no "verified" without a valid passage, nor with a figure the passages lack.
+6. **Router** (code). When a sub-question lacks evidence, it starts a targeted research cycle. Here the 30-minute limit was reached: it went straight to the report, which says so in its limitations.
+7. **Writer** (1 call, 1 min). It receives only the checked claims, never web text. The model writes the title and a 3-sentence summary; *code* builds **8 cited statements**, the bibliography of **8 sources**, the separate list of 10 unverified points and the limitations. The report comes out as Markdown, PDF and JSON.
+
 ## Results
 
 I evaluated the agent on **10 questions**, 5 in French and 5 in English: batteries, heat pumps, mRNA, sea level, CRISPR, nuclear power, Transformers, GDPR, the SVB collapse and inflation. Each question has 5 expected key points. Every metric is computed from what the research recorded, without running it again.

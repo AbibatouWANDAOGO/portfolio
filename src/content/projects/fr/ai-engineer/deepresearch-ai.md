@@ -63,6 +63,21 @@ Au total : **283 tests**, qui n'ont besoin ni de réseau, ni de modèle, ni de c
 ![Traçabilité d'une affirmation](/portfolio/images/deepresearch/dashboard_claim_trace.png)
 *La traçabilité : une affirmation, la justification du Fact Checker et les passages exacts qui la soutiennent, avec leur position (caractères 6933 à 7133) dans le texte de la source.*
 
+## Ce que fait chaque agent, sur une vraie réponse
+
+J'ai suivi une vraie recherche de bout en bout, de la question au rapport : **« Pourquoi les pompes à chaleur sont-elles efficaces ? »**, lancée dans Docker avec le modèle local. Elle a demandé 16 appels au modèle, 31 minutes et 0 $. Les chiffres et les extraits ci-dessous viennent de ce qu'elle a enregistré.
+
+![Une réponse, agent par agent](/portfolio/images/deepresearch/agents_walkthrough.png)
+*Pour chaque étape : ce que l'agent reçoit, ce qu'il a produit sur cette question, ce que le code vérifie avant l'étape suivante, et ce que ça a coûté. En bleu, les agents qui appellent le modèle ; en gris, les étapes de code pur.*
+
+1. **Planner** (1 appel, 1 min). Il reçoit la question et la transforme en plan : **3 sous-questions** (caractéristiques techniques, avantages écologiques, facteurs d'efficacité), **9 requêtes de recherche** et 4 critères de qualité. *Le code* plafonne le nombre de sous-questions et supprime les requêtes en double.
+2. **Researcher** (3 appels, 3 min). Il reçoit les résultats de recherche web de chaque sous-question et choisit les sources à lire : **9 sources**, dont la fiche technique de négaWatt (PDF), la page de Vaillant sur le COP et le SCOP, et le guide de Greenter sur les facteurs du COP. *Le code* ignore les sources inventées et les URL déjà collectées.
+3. **Collecte et indexation** (code, sans modèle, 1 min). Les 9 pages sont téléchargées sans erreur, soit 110 000 caractères de texte propre. Elles sont découpées en **70 passages** qui gardent leur source, leur page et leur position, puis indexés deux fois : en vecteurs sémantiques et en mots-clés. *Le code* n'autorise que les adresses publiques et respecte le robots.txt.
+4. **Analyst** (3 appels, 9 min). Il reçoit les 5 meilleurs passages de chaque sous-question et en extrait **18 affirmations**, chacune liée à ses passages. Par exemple : « La technologie Inverter peut augmenter le rendement réel de 20 à 30 % ». Il signale aussi des manques, comme l'absence de passage expliquant comment le SCOP est mesuré. *Le code* rejette les références à des passages qui n'existent pas.
+5. **Fact Checker** (8 appels, 16 min). Pour chaque affirmation, il reçoit des passages recherchés à nouveau, et rend un verdict : **4 vérifiées, 3 partiellement, 1 contestée**. Les seuils de SCOP, par exemple, sont soutenus par 3 sources et contredits par une 4e. 10 affirmations n'ont pas été examinées faute de temps. *Le code* plafonne le verdict : pas de « vérifié » sans passage valide, ni avec un chiffre absent des passages.
+6. **Routeur** (code). Si une sous-question manque de preuves, il relance un cycle de recherche ciblé. Ici, la limite de 30 minutes était atteinte : il est passé directement au rapport, et le rapport le signale dans ses limites.
+7. **Writer** (1 appel, 1 min). Il ne reçoit que les affirmations vérifiées, jamais le texte du web. Le modèle écrit le titre et un résumé de 3 phrases ; *le code* construit **8 phrases citées**, la bibliographie de **8 sources**, la liste à part des 10 points non vérifiés et les limites. Le rapport sort en Markdown, PDF et JSON.
+
 ## Résultats
 
 J'ai évalué l'agent sur **10 questions**, 5 en français et 5 en anglais : batteries, pompes à chaleur, ARN messager, niveau de la mer, CRISPR, nucléaire, Transformers, RGPD, faillite de SVB et inflation. Chaque question a 5 points clés attendus. Toutes les mesures sont calculées à partir de ce que la recherche a enregistré, sans la relancer.
