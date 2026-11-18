@@ -87,6 +87,15 @@ Chaque valeur vient de la plateforme exécutée sur Databricks Free Edition, et 
 | Benchmarks automatiques | 4 sur 4 |
 | Même table sans commentaires de colonnes | mêmes réponses sur trois questions : les noms de colonnes portaient déjà le sens |
 
+![Genie répond au taux d'occupation du 31 août](/portfolio/images/camping/genie_taux_occupation.png)
+*Une question posée en français : Genie additionne les catégories et répond 66,67 %, soit 8 emplacements occupés sur 12.*
+
+![Genie trace la répartition des séjours par type de groupe](/portfolio/images/camping/genie_graphique_groupes.png)
+*Genie peut aussi tracer un graphique : 62,5 % des séjours sont des familles. Ce chiffre ne couvre que les clients qui ont accepté les statistiques, ce que Genie n'a précisé qu'une fois ses instructions renforcées.*
+
+![Évaluation automatique des benchmarks : 100 %](/portfolio/images/camping/genie_benchmarks.png)
+*L'évaluation automatique contre des requêtes SQL de référence : 4 benchmarks réussis sur 4.*
+
 ![Genie refuse les données personnelles et signale la fuite sur emplacement vide](/portfolio/images/camping/genie_refus_et_fuite.png)
 *Genie refuse de donner les noms et e-mails des clients, et signale la fuite de la nuit sur un emplacement vide.*
 

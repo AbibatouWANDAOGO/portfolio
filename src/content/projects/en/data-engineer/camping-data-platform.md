@@ -87,6 +87,15 @@ Every value comes from the platform run on Databricks Free Edition, and was comp
 | Automatic benchmarks | 4 out of 4 |
 | Same table without column comments | same answers on three questions: column names already carried the meaning |
 
+![Genie answers the occupancy question for 31 August](/portfolio/images/camping/genie_taux_occupation.png)
+*A question asked in French: Genie sums the categories and answers 66.67 %, i.e. 8 pitches occupied out of 12.*
+
+![Genie charts stays by group type](/portfolio/images/camping/genie_graphique_groupes.png)
+*Genie can also draw a chart: 62.5 % of stays are families. This figure covers only customers who agreed to statistics, which Genie stated only once its instructions were strengthened.*
+
+![Automatic benchmark evaluation: 100 %](/portfolio/images/camping/genie_benchmarks.png)
+*Automatic evaluation against reference SQL queries: 4 benchmarks passed out of 4.*
+
 ![Genie refuses personal data and reports the leak on an empty pitch](/portfolio/images/camping/genie_refus_et_fuite.png)
 *Genie refuses to give customers' names and e-mails, and reports the night's leak on an empty pitch.*
 
