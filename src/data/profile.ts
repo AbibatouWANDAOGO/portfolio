@@ -163,11 +163,11 @@ const fr = {
     },
     {
       group: 'Data science & IA',
-      items: ['Intelligence artificielle', 'Machine learning', 'Deep learning', 'Statistiques', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'Random Forest', 'TensorFlow', 'Keras', 'LLM', 'RAG', 'LangGraph', 'Agents IA'],
+      items: ['Intelligence artificielle', 'Machine learning', 'Deep learning', 'Statistiques', 'RGPD', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'Random Forest', 'TensorFlow', 'Keras', 'LLM', 'RAG', 'LangGraph', 'Agents IA'],
     },
     {
       group: 'ML Engineering & Big Data',
-      items: ['FastAPI', 'Pydantic', 'Docker', 'Pytest', 'Ollama', 'Streamlit', 'Big data analytics', 'Spark', 'Databricks', 'Cloud'],
+      items: ['FastAPI', 'Pydantic', 'Docker', 'Pytest', 'Ollama', 'Streamlit', 'Big data analytics', 'Spark', 'Databricks', 'Delta Lake', 'Unity Catalog', 'Hackolade', 'Cloud'],
     },
     { group: 'Bases de données & outils', items: ['Oracle Database', 'SQLite', 'Neo4j', 'Qdrant', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
     {
@@ -320,11 +320,11 @@ const en: typeof fr = {
     },
     {
       group: 'Data Science & AI',
-      items: ['Artificial intelligence', 'Machine learning', 'Deep learning', 'Statistics', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'Random Forest', 'TensorFlow', 'Keras', 'LLM', 'RAG', 'LangGraph', 'AI agents'],
+      items: ['Artificial intelligence', 'Machine learning', 'Deep learning', 'Statistics', 'GDPR', 'Pandas', 'NumPy', 'Matplotlib', 'Scikit-learn', 'Random Forest', 'TensorFlow', 'Keras', 'LLM', 'RAG', 'LangGraph', 'AI agents'],
     },
     {
       group: 'ML Engineering & Big Data',
-      items: ['FastAPI', 'Pydantic', 'Docker', 'Pytest', 'Ollama', 'Streamlit', 'Big data analytics', 'Spark', 'Databricks', 'Cloud'],
+      items: ['FastAPI', 'Pydantic', 'Docker', 'Pytest', 'Ollama', 'Streamlit', 'Big data analytics', 'Spark', 'Databricks', 'Delta Lake', 'Unity Catalog', 'Hackolade', 'Cloud'],
     },
     { group: 'Databases & Tools', items: ['Oracle Database', 'SQLite', 'Neo4j', 'Qdrant', 'Jupyter', 'Git & GitHub', 'VS Code', 'Linux', 'PowerPoint', 'Canva'] },
     {
